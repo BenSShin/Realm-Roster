@@ -35,6 +35,23 @@ export function Content() {
     setCurrentMessage(message);
   };
 
+  const handleUpdateMessage = (id, params, successCallback) => {
+    console.log("handleUpdateMessage", params);
+    axios.patch(`http://localhost:3000/messages/${id}.json`, params).then((response) => {
+      setMessages(
+        messages.map((message) => {
+          if (message.id === response.data.id) {
+            return response.data;
+          } else {
+            return message;
+          }
+        })
+      );
+      successCallback();
+      handleClose();
+    });
+  };
+
   const handleClose = () => {
     console.log("handleClose");
     setIsMessageShowVisible(false);
@@ -57,7 +74,7 @@ export function Content() {
       <MessagesIndex messages={messages} onShowMessage={handleShowMessage} />
       <MessagesNew onCreateMessage={handleCreateMessage} />
       <Modal show={isMessageShowVisible} onClose={handleClose}>
-        <MessagesShow message={currentMessage} />
+        <MessagesShow message={currentMessage} onUpdateMessage={handleUpdateMessage} />
       </Modal>
     </main>
   );
