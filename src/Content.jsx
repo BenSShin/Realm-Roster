@@ -5,9 +5,13 @@ import { SignUp } from "./SignUp";
 import { Login } from "./Login";
 import { LogoutLink } from "./Logout";
 import { MessagesNew } from "./MessagesNew";
+import { Modal } from "./Modal";
+import { MessagesShow } from "./MessagesShow";
 
 export function Content() {
   const [messages, setMessages] = useState([]);
+  const [isMessageShowVisible, setIsMessageShowVisible] = useState(false);
+  const [currentMessage, setCurrentMessage] = useState({});
 
   const handleIndexMessages = () => {
     console.log("handleIndexMessages");
@@ -25,6 +29,24 @@ export function Content() {
     });
   };
 
+  const handleShowMessage = (message) => {
+    console.log("handleShowMessage", message);
+    setIsMessageShowVisible(true);
+    setCurrentMessage(message);
+  };
+
+  const handleClose = () => {
+    console.log("handleClose");
+    setIsMessageShowVisible(false);
+  };
+
+  // const handleDestroyMessage = (message) => {
+  //   console.log("handleDestroyMessage", message);
+  //   axios.delete(`http://localhost:3000/messages/${message.id}.json`).then((response) => {
+  //     setMessages(messages.filter((p) => p.id !== message.id));
+  //   });
+  // };
+
   useEffect(handleIndexMessages, []);
 
   return (
@@ -32,8 +54,11 @@ export function Content() {
       <SignUp />
       <Login />
       <LogoutLink />
-      <MessagesIndex messages={messages} />
+      <MessagesIndex messages={messages} onShowMessage={handleShowMessage} />
       <MessagesNew onCreateMessage={handleCreateMessage} />
+      <Modal show={isMessageShowVisible} onClose={handleClose}>
+        <MessagesShow message={currentMessage} />
+      </Modal>
     </main>
   );
 }

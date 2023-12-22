@@ -5,7 +5,7 @@ export function MessagesIndex(props) {
       <h1>Messages</h1>
       {props.messages.map((message) => (
         <div key={message.id}>
-          <h2>{message.content}</h2>
+          <a onClick={() => props.onShowMessage(message)}>{message.content}</a>
         </div>
       ))}
     </div>
