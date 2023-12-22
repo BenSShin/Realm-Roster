@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 export function MessagesNew(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -10,7 +9,7 @@ export function MessagesNew(props) {
       <h1>New Message</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          Name: <input name="content" type="text" />
+          Content: <input name="content" type="text" />
         </div>
         <button type="submit">Send Message</button>
       </form>
