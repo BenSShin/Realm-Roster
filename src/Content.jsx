@@ -9,13 +9,14 @@ import { Modal } from "./Modal";
 import { MessagesShow } from "./MessagesShow";
 import { GroupsShow } from "./GroupsShow";
 import { GroupsNew } from "./GroupsNew";
+import { GroupsUpdatePage } from "./GroupsUpdatePage";
 
 export function Content() {
   const [messages, setMessages] = useState([]);
   const [isMessageShowVisible, setIsMessageShowVisible] = useState(false);
   const [currentMessage, setCurrentMessage] = useState({});
   const [currentGroup, setCurrentGroup] = useState({});
-  // const [group_id, setGroup_id] = useState({});
+  const [isGroupUpdateVisible, setIsGroupUpdateVisible] = useState(false);
 
   // index of messages
   const handleIndexMessages = () => {
@@ -81,19 +82,47 @@ export function Content() {
     });
   };
 
-  // Create Group user update works but have to refresh page
+  // Create Group user update works but have to refresh
   const handleCreateGroup = (params, successCallback) => {
     localStorage.removeItem("groupId");
     console.log("handleCreateGroup", params);
     axios.post("http://localhost:3000/groups.json", params).then((response) => {
       localStorage.setItem("groupId", response.data.id);
-      setCurrentGroup([...currentGroup, response.data]);
+      setCurrentGroup([currentGroup, response.data]);
       successCallback;
       const patchData = { group_id: response.data.id };
       console.log(patchData);
       axios.patch("http://localhost:3000/user.json", patchData).then((response) => {
         console.log(response.data);
       });
+    });
+  };
+
+  const handleGroupUpdateClose = () => {
+    console.log("handleClose");
+    setIsGroupUpdateVisible(false);
+  };
+
+  const handleShowGroupUpdate = () => {
+    console.log("handleShowGroupUpdate");
+    setIsGroupUpdateVisible(true);
+  };
+
+  const handleUpdateGroup = (id, params, successCallback) => {
+    console.log("handleUpdateGroup", params, id);
+    axios.patch(`http://localhost:3000/groups/${id}.json`, params).then((response) => {
+      setCurrentGroup(currentGroup);
+    });
+    successCallback();
+    handleGroupUpdateClose();
+  };
+
+  // Destroy group
+  const handleDestroyGroup = () => {
+    console.log("handleDestroyGroup");
+    const group_id = localStorage.getItem("groupId");
+    axios.delete(`http://localhost:3000/groups/${group_id}.json`).then((response) => {
+      setCurrentGroup(currentGroup);
     });
   };
 
@@ -105,10 +134,13 @@ export function Content() {
       <SignUp />
       <Login />
       <LogoutLink />
-      <GroupsShow group={currentGroup} />
+      <GroupsShow group={currentGroup} onShowGroupUpdate={handleShowGroupUpdate} />
       <GroupsNew onCreateGroup={handleCreateGroup} />
       <MessagesIndex messages={messages} onShowMessage={handleShowMessage} />
       <MessagesNew onCreateMessage={handleCreateMessage} />
+      <Modal show={isGroupUpdateVisible} onClose={handleGroupUpdateClose}>
+        <GroupsUpdatePage group={currentGroup} onDestroyGroup={handleDestroyGroup} onUpdateGroup={handleUpdateGroup} />
+      </Modal>
       <Modal show={isMessageShowVisible} onClose={handleClose}>
         <MessagesShow
           message={currentMessage}

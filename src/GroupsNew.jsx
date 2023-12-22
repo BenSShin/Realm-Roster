@@ -3,6 +3,9 @@ export function GroupsNew(props) {
     event.preventDefault();
     const params = new FormData(event.target);
     props.onCreateGroup(params, () => event.target.reset());
+    setTimeout(function () {
+      window.location = window.location;
+    }, 1000);
   };
   return (
     <div>
