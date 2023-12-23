@@ -10,6 +10,8 @@ import { MessagesShow } from "./MessagesShow";
 import { GroupsShow } from "./GroupsShow";
 import { GroupsNew } from "./GroupsNew";
 import { GroupsUpdatePage } from "./GroupsUpdatePage";
+import { Route, Routes } from "react-router-dom";
+import { HomePage } from "./HomePage";
 
 export function Content() {
   const [messages, setMessages] = useState([]);
@@ -127,14 +129,21 @@ export function Content() {
   };
 
   useEffect(handleIndexMessages, []);
-  useEffect(handleShowGroup, []);
+  if (localStorage.jwt !== undefined) {
+    useEffect(handleShowGroup, []);
+  }
 
   return (
     <main>
+      <Routes>
+        <Route path="/group" element={<GroupsShow group={currentGroup} onShowGroupUpdate={handleShowGroupUpdate} />} />
+      </Routes>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
       <SignUp />
       <Login />
       <LogoutLink />
-      <GroupsShow group={currentGroup} onShowGroupUpdate={handleShowGroupUpdate} />
       <GroupsNew onCreateGroup={handleCreateGroup} />
       <MessagesIndex messages={messages} onShowMessage={handleShowMessage} />
       <MessagesNew onCreateMessage={handleCreateMessage} />

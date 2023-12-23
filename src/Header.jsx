@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 export function Header() {
   return (
     <header>
       <nav>
-        <a href="#">Home</a> | <a href="#">Your Party</a>| <a href="#">Create Party</a>| <a href="#">Login</a>|{" "}
-        <a href="#">Sign Up</a>
+        <Link to="/">Home</Link> | <Link to="/group">Your Group</Link>| <a href="#">Create Party</a>|{" "}
+        <a href="#">Login</a>|<a href="#">Sign Up</a>
       </nav>
     </header>
   );
