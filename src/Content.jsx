@@ -20,10 +20,11 @@ export function Content() {
   const [currentGroup, setCurrentGroup] = useState({});
   const [isGroupUpdateVisible, setIsGroupUpdateVisible] = useState(false);
 
-  // index of messages
+  // index of group's messages
   const handleIndexMessages = () => {
+    const group = localStorage.getItem("groupId");
     console.log("handleIndexMessages");
-    axios.get(`http://localhost:3000/messages.json`).then((response) => {
+    axios.get(`http://localhost:3000/messages.json?group_id=${group}`).then((response) => {
       console.log(response.data);
       setMessages(response.data);
     });
@@ -36,7 +37,7 @@ export function Content() {
       successCallback;
     });
   };
-  // Show message
+  // Show message model with update and delete button
   const handleShowMessage = (message) => {
     console.log("handleShowMessage", message);
     setIsMessageShowVisible(true);
@@ -59,7 +60,7 @@ export function Content() {
       handleClose();
     });
   };
-
+  // close model message
   const handleClose = () => {
     console.log("handleClose");
     setIsMessageShowVisible(false);
@@ -99,17 +100,17 @@ export function Content() {
       });
     });
   };
-
+  // closes update model for group
   const handleGroupUpdateClose = () => {
     console.log("handleClose");
     setIsGroupUpdateVisible(false);
   };
-
+  // shows update model for group
   const handleShowGroupUpdate = () => {
     console.log("handleShowGroupUpdate");
     setIsGroupUpdateVisible(true);
   };
-
+  // updates group
   const handleUpdateGroup = (id, params, successCallback) => {
     console.log("handleUpdateGroup", params, id);
     axios.patch(`http://localhost:3000/groups/${id}.json`, params).then((response) => {
