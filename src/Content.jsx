@@ -47,6 +47,15 @@ export function Content() {
     console.log("handleShowCharacter", character);
     setCurrentCharacter(character);
   };
+  // character update
+  const handleUpdateCharacter = (id, params, successCallback) => {
+    console.log("handleUpdateCharacter", params);
+    axios.patch(`http://localhost:3000/characters/${id}.json`, params).then((response) => {
+      setCurrentCharacter(response.data);
+      successCallback();
+    });
+  };
+
   // index of group's messages
   const handleIndexMessages = () => {
     const group = localStorage.getItem("groupId");
@@ -161,7 +170,16 @@ export function Content() {
         <Route path="/characters-new" element={<CharactersNew onCreateCharacter={handleCreateCharacter} />} />
       </Routes>
       <Routes>
-        <Route path="/character" element={<CharactersShow character={currentCharacter} />} />
+        <Route
+          path="/character"
+          element={
+            <CharactersShow
+              character={currentCharacter}
+              onUpdateCharacter={handleUpdateCharacter}
+              onShowCharacter={handleShowCharacter}
+            />
+          }
+        />
       </Routes>
       <Routes>
         <Route
