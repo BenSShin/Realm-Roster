@@ -13,6 +13,9 @@ export function CharactersIndex(props) {
           <Link to="/character">
             <button onClick={() => props.onShowCharacter(character)}>More Info</button>
           </Link>
+          <Link to="/group">
+            <button onClick={() => props.onShowGroup(character)}>Character Group</button>
+          </Link>
         </div>
       ))}
     </div>

@@ -3,7 +3,6 @@ export function GroupsUpdatePage(props) {
     event.preventDefault();
     const params = new FormData(event.target);
     props.onUpdateGroup(props.group.id, params, () => event.target.reset());
-    window.location.href = "/";
   };
 
   const handleClick = () => {

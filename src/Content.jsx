@@ -17,14 +17,18 @@ import { CharactersNew } from "./CharactersNew";
 import { CharactersShow } from "./CharactersShow";
 
 export function Content() {
+  //messages
   const [messages, setMessages] = useState([]);
   const [isMessageShowVisible, setIsMessageShowVisible] = useState(false);
   const [currentMessage, setCurrentMessage] = useState({});
+  // group
   const [currentGroup, setCurrentGroup] = useState({});
   const [isGroupUpdateVisible, setIsGroupUpdateVisible] = useState(false);
+  // character
   const [characters, setCharacters] = useState([]);
   const [currentCharacter, setCurrentCharacter] = useState([]);
 
+  // character functions
   // index of user's characters
   const handleIndexCharacters = () => {
     console.log("handleIndexCharacters");
@@ -56,6 +60,7 @@ export function Content() {
     });
   };
 
+  // Message functions
   // index of group's messages
   const handleIndexMessages = () => {
     const group = localStorage.getItem("groupId");
@@ -110,14 +115,14 @@ export function Content() {
       handleClose();
     });
   };
+
+  // Group functions
   // Show Group
-  const handleShowGroup = () => {
-    localStorage.removeItem("groupId");
+  const handleShowGroup = (character) => {
     console.log("handleShowGroup");
-    axios.get("http://localhost:3000/group.json").then((response) => {
+    axios.get(`http://localhost:3000/groups/${character.group_id}.json`).then((response) => {
       console.log(response.data);
       setCurrentGroup(response.data);
-      localStorage.setItem("groupId", response.data.id);
     });
   };
 
@@ -143,9 +148,9 @@ export function Content() {
   const handleUpdateGroup = (id, params, successCallback) => {
     console.log("handleUpdateGroup", params, id);
     axios.patch(`http://localhost:3000/groups/${id}.json`, params).then((response) => {
-      setCurrentGroup(currentGroup);
+      setCurrentGroup(response.data);
+      successCallback();
     });
-    successCallback();
     handleGroupUpdateClose();
   };
 
@@ -160,9 +165,6 @@ export function Content() {
 
   useEffect(handleIndexCharacters, []);
   useEffect(handleIndexMessages, []);
-  if (localStorage.jwt !== undefined) {
-    useEffect(handleShowGroup, []);
-  }
 
   return (
     <main>
@@ -184,7 +186,13 @@ export function Content() {
       <Routes>
         <Route
           path="/characters"
-          element={<CharactersIndex characters={characters} onShowCharacter={handleShowCharacter} />}
+          element={
+            <CharactersIndex
+              characters={characters}
+              onShowCharacter={handleShowCharacter}
+              onShowGroup={handleShowGroup}
+            />
+          }
         />
       </Routes>
       <Routes>
@@ -201,7 +209,7 @@ export function Content() {
                   onUpdateGroup={handleUpdateGroup}
                 />
               </Modal>
-              <MessagesIndex messages={messages} onShowMessage={handleShowMessage} />
+              {/* <MessagesIndex messages={messages} onShowMessage={handleShowMessage} />
               <MessagesNew onCreateMessage={handleCreateMessage} />
               <Modal show={isMessageShowVisible} onClose={handleClose}>
                 <MessagesShow
@@ -209,7 +217,7 @@ export function Content() {
                   onUpdateMessage={handleUpdateMessage}
                   onDestroyMessage={handleDestroyMessage}
                 />
-              </Modal>
+              </Modal> */}
             </>
           }
         />
