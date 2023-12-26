@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { MessagesIndex } from "./MessagesIndex";
 import { SignUp } from "./SignUp";
 import { Login } from "./Login";
-import { LogoutLink } from "./Logout";
 import { MessagesNew } from "./MessagesNew";
 import { Modal } from "./Modal";
 import { MessagesShow } from "./MessagesShow";
@@ -12,6 +11,7 @@ import { GroupsNew } from "./GroupsNew";
 import { GroupsUpdatePage } from "./GroupsUpdatePage";
 import { Route, Routes } from "react-router-dom";
 import { HomePage } from "./HomePage";
+import { Calendar } from "./Calendar";
 
 export function Content() {
   const [messages, setMessages] = useState([]);
@@ -137,27 +137,47 @@ export function Content() {
   return (
     <main>
       <Routes>
-        <Route path="/group" element={<GroupsShow group={currentGroup} onShowGroupUpdate={handleShowGroupUpdate} />} />
+        <Route
+          path="/group"
+          element={
+            <>
+              <Calendar />
+              <GroupsShow group={currentGroup} onShowGroupUpdate={handleShowGroupUpdate} />
+              <Modal show={isGroupUpdateVisible} onClose={handleGroupUpdateClose}>
+                <GroupsUpdatePage
+                  group={currentGroup}
+                  onDestroyGroup={handleDestroyGroup}
+                  onUpdateGroup={handleUpdateGroup}
+                />
+              </Modal>
+              <MessagesIndex messages={messages} onShowMessage={handleShowMessage} />
+              <MessagesNew onCreateMessage={handleCreateMessage} />
+              <Modal show={isMessageShowVisible} onClose={handleClose}>
+                <MessagesShow
+                  message={currentMessage}
+                  onUpdateMessage={handleUpdateMessage}
+                  onDestroyMessage={handleDestroyMessage}
+                />
+              </Modal>
+            </>
+          }
+        />
       </Routes>
       <Routes>
         <Route path="/" element={<HomePage />} />
       </Routes>
-      <SignUp />
-      <Login />
-      <LogoutLink />
-      <GroupsNew onCreateGroup={handleCreateGroup} />
-      <MessagesIndex messages={messages} onShowMessage={handleShowMessage} />
-      <MessagesNew onCreateMessage={handleCreateMessage} />
-      <Modal show={isGroupUpdateVisible} onClose={handleGroupUpdateClose}>
-        <GroupsUpdatePage group={currentGroup} onDestroyGroup={handleDestroyGroup} onUpdateGroup={handleUpdateGroup} />
-      </Modal>
-      <Modal show={isMessageShowVisible} onClose={handleClose}>
-        <MessagesShow
-          message={currentMessage}
-          onUpdateMessage={handleUpdateMessage}
-          onDestroyMessage={handleDestroyMessage}
-        />
-      </Modal>
+      <Routes>
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+      </Routes>
+      <Routes>
+        <Route path="/group-new" element={<GroupsNew onCreateGroup={handleCreateGroup} />} />
+      </Routes>
+      <Routes>
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
     </main>
   );
 }
