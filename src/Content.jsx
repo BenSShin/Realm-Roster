@@ -12,6 +12,9 @@ import { GroupsUpdatePage } from "./GroupsUpdatePage";
 import { Route, Routes } from "react-router-dom";
 import { HomePage } from "./HomePage";
 import { Calendar } from "./Calendar";
+import { CharactersIndex } from "./CharactersIndex";
+import { CharactersNew } from "./CharactersNew";
+import { CharactersShow } from "./CharactersShow";
 
 export function Content() {
   const [messages, setMessages] = useState([]);
@@ -19,7 +22,31 @@ export function Content() {
   const [currentMessage, setCurrentMessage] = useState({});
   const [currentGroup, setCurrentGroup] = useState({});
   const [isGroupUpdateVisible, setIsGroupUpdateVisible] = useState(false);
+  const [characters, setCharacters] = useState([]);
+  const [currentCharacter, setCurrentCharacter] = useState([]);
 
+  // index of user's characters
+  const handleIndexCharacters = () => {
+    console.log("handleIndexCharacters");
+    axios.get("http://localhost:3000/characters.json").then((response) => {
+      console.log(response.data);
+      setCharacters(response.data);
+    });
+  };
+  // character create
+  const handleCreateCharacter = (params, successCallback) => {
+    console.log("handleCreateCharacter", params);
+    axios.post("http://localhost:3000/characters.json", params).then((response) => {
+      setCharacters([...characters, response.data]);
+      successCallback();
+    });
+  };
+
+  // character show page
+  const handleShowCharacter = (character) => {
+    console.log("handleShowCharacter", character);
+    setCurrentCharacter(character);
+  };
   // index of group's messages
   const handleIndexMessages = () => {
     const group = localStorage.getItem("groupId");
@@ -87,17 +114,10 @@ export function Content() {
 
   // Create Group user update works but have to refresh
   const handleCreateGroup = (params, successCallback) => {
-    localStorage.removeItem("groupId");
     console.log("handleCreateGroup", params);
     axios.post("http://localhost:3000/groups.json", params).then((response) => {
-      localStorage.setItem("groupId", response.data.id);
       setCurrentGroup([currentGroup, response.data]);
       successCallback;
-      const patchData = { group_id: response.data.id };
-      console.log(patchData);
-      axios.patch("http://localhost:3000/user.json", patchData).then((response) => {
-        console.log(response.data);
-      });
     });
   };
   // closes update model for group
@@ -129,6 +149,7 @@ export function Content() {
     });
   };
 
+  useEffect(handleIndexCharacters, []);
   useEffect(handleIndexMessages, []);
   if (localStorage.jwt !== undefined) {
     useEffect(handleShowGroup, []);
@@ -136,6 +157,18 @@ export function Content() {
 
   return (
     <main>
+      <Routes>
+        <Route path="/characters-new" element={<CharactersNew onCreateCharacter={handleCreateCharacter} />} />
+      </Routes>
+      <Routes>
+        <Route path="/character" element={<CharactersShow character={currentCharacter} />} />
+      </Routes>
+      <Routes>
+        <Route
+          path="/characters"
+          element={<CharactersIndex characters={characters} onShowCharacter={handleShowCharacter} />}
+        />
+      </Routes>
       <Routes>
         <Route
           path="/group"
