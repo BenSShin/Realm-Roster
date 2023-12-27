@@ -171,7 +171,7 @@ export function Content() {
   useEffect(handleIndexCharacters, []);
 
   return (
-    <main>
+    <main className="bg-[#EEE2DE] min-h-screen h-full">
       <Routes>
         <Route path="/characters-new" element={<CharactersNew onCreateCharacter={handleCreateCharacter} />} />
       </Routes>

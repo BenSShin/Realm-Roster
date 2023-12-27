@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
-    <div className="bg-[#EEE2DE]">
+    <div>
       <BrowserRouter>
         <Header />
         <Content />

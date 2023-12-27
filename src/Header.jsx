@@ -4,7 +4,7 @@ import { LogoutLink } from "./Logout";
 export function Header() {
   return (
     <header>
-      <nav>
+      <nav className=" p-4 bg-[#1F1717] text-white font-mono">
         {localStorage.jwt !== undefined ? (
           <>
             <Link to="/">Home</Link> |<Link to="/characters">Your Characters</Link>|
