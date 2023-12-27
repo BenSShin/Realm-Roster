@@ -69,10 +69,9 @@ export function Content() {
 
   // Message functions
   // index of group's messages
-  const handleIndexMessages = () => {
-    const group = localStorage.getItem("groupId");
+  const handleIndexMessages = (character) => {
     console.log("handleIndexMessages");
-    axios.get(`http://localhost:3000/messages.json?group_id=${group}`).then((response) => {
+    axios.get(`http://localhost:3000/messages.json?group_id=${character.group_id}`).then((response) => {
       console.log(response.data);
       setMessages(response.data);
     });
@@ -170,7 +169,6 @@ export function Content() {
   };
 
   useEffect(handleIndexCharacters, []);
-  useEffect(handleIndexMessages, []);
 
   return (
     <main>
@@ -198,6 +196,7 @@ export function Content() {
               characters={characters}
               onShowCharacter={handleShowCharacter}
               onShowGroup={handleShowGroup}
+              onIndexMessages={handleIndexMessages}
             />
           }
         />
@@ -216,7 +215,7 @@ export function Content() {
                   onUpdateGroup={handleUpdateGroup}
                 />
               </Modal>
-              {/* <MessagesIndex messages={messages} onShowMessage={handleShowMessage} />
+              <MessagesIndex messages={messages} onShowMessage={handleShowMessage} />
               <MessagesNew onCreateMessage={handleCreateMessage} />
               <Modal show={isMessageShowVisible} onClose={handleClose}>
                 <MessagesShow
@@ -224,7 +223,7 @@ export function Content() {
                   onUpdateMessage={handleUpdateMessage}
                   onDestroyMessage={handleDestroyMessage}
                 />
-              </Modal> */}
+              </Modal>
             </>
           }
         />

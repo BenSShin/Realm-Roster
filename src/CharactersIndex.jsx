@@ -16,7 +16,14 @@ export function CharactersIndex(props) {
           {parseInt(character.group_id) !== 1 ? (
             <>
               <Link to="/group">
-                <button onClick={() => props.onShowGroup(character)}>Character Group</button>
+                <button
+                  onClick={() => {
+                    props.onShowGroup(character);
+                    props.onIndexMessages(character);
+                  }}
+                >
+                  Character Group
+                </button>
               </Link>
             </>
           ) : (
