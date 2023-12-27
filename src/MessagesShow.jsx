@@ -15,8 +15,8 @@ export function MessagesShow(props) {
           Content: <input defaultValue={props.message.content} name="content" type="text" />
         </div>
         <button type="submit">Update message</button>
-        <button onClick={handleClick}>Delete</button>
       </form>
+      <button onClick={handleClick}>Delete</button>
     </div>
   );
 }

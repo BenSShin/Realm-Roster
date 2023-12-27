@@ -216,7 +216,7 @@ export function Content() {
                 />
               </Modal>
               <MessagesIndex messages={messages} onShowMessage={handleShowMessage} />
-              <MessagesNew onCreateMessage={handleCreateMessage} />
+              <MessagesNew onCreateMessage={handleCreateMessage} group={currentGroup} />
               <Modal show={isMessageShowVisible} onClose={handleClose}>
                 <MessagesShow
                   message={currentMessage}
