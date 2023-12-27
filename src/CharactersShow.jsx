@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function CharactersShow(props) {
   const [isUpdateVisible, setIsUpdateVisible] = useState(false);
@@ -15,6 +15,12 @@ export function CharactersShow(props) {
     props.onUpdateCharacter(props.character.id, params, () => event.target.reset());
     props.onShowCharacter(props.character, () => event.target.reset());
   };
+  let navigate = useNavigate();
+  const handleClick = () => {
+    props.onDestroyCharacter(props.character);
+    let path = "/characters";
+    navigate(path);
+  };
 
   return (
     <div>
@@ -24,6 +30,7 @@ export function CharactersShow(props) {
       <p>Race: {props.character.race}</p>
       <p>Class: {props.character.character_class}</p>
       <p>Description: {props.character.description}</p>
+      <button onClick={handleClick}>Delete Character</button>
       {isUpdateVisible === true ? (
         <>
           <form onSubmit={handleSubmit}>

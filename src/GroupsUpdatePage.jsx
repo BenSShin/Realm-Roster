@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export function GroupsUpdatePage(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -25,7 +27,9 @@ export function GroupsUpdatePage(props) {
           Location: <input defaultValue={props.group.location} name="location" type="text" />
         </div>
         <button type="submit">Update Group</button>
-        <button onClick={handleClick}>Delete Group</button>
+        <Link to="/characters">
+          <button onClick={handleClick}>Delete Group</button>
+        </Link>
       </form>
     </div>
   );

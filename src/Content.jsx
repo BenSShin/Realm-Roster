@@ -59,6 +59,13 @@ export function Content() {
       successCallback();
     });
   };
+  // character delete
+  const handleDestroyCharacter = (character) => {
+    console.log("handleDestroyCharacter", character);
+    axios.delete(`http://localhost:3000/characters/${character.id}.json`).then((response) => {
+      setCharacters(characters.filter((c) => c.id !== character.id));
+    });
+  };
 
   // Message functions
   // index of group's messages
@@ -155,12 +162,11 @@ export function Content() {
   };
 
   // Destroy group
-  const handleDestroyGroup = () => {
-    console.log("handleDestroyGroup");
-    const group_id = localStorage.getItem("groupId");
-    axios.delete(`http://localhost:3000/groups/${group_id}.json`).then((response) => {
-      setCurrentGroup(currentGroup);
+  const handleDestroyGroup = (group) => {
+    axios.delete(`http://localhost:3000/groups/${group.id}.json`).then((response) => {
+      console.log(response);
     });
+    handleGroupUpdateClose();
   };
 
   useEffect(handleIndexCharacters, []);
@@ -179,6 +185,7 @@ export function Content() {
               character={currentCharacter}
               onUpdateCharacter={handleUpdateCharacter}
               onShowCharacter={handleShowCharacter}
+              onDestroyCharacter={handleDestroyCharacter}
             />
           }
         />

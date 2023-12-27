@@ -1,8 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 export function CharactersNew(props) {
+  let navigate = useNavigate();
   const handleSubmit = (event) => {
+    let path = "/characters";
     event.preventDefault();
     const params = new FormData(event.target);
     props.onCreateCharacter(params, () => event.target.reset());
+    navigate(path);
   };
   return (
     <div>
