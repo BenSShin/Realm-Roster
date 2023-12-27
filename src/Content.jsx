@@ -240,9 +240,6 @@ export function Content() {
       <Routes>
         <Route path="/group-new" element={<GroupsNew onCreateGroup={handleCreateGroup} />} />
       </Routes>
-      <Routes>
-        <Route path="/signup" element={<SignUp />} />
-      </Routes>
     </main>
   );
 }
