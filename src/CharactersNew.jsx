@@ -10,25 +10,57 @@ export function CharactersNew(props) {
     navigate(path);
   };
   return (
-    <div>
-      <h1>New Character</h1>
+    <div className="pt-10">
+      <h1 className="text-3xl font-bold pb-10">Create a Character</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          Name: <input name="name" type="text" />
+        <div className="grid grid-cols-2 gap-8">
+          <div className="flex justify-end">
+            <div className="w-80 max-w-80 h-8 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+              <p className="px-3 pt-1">Name:</p>
+              <input className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none " name="name" type="text" />
+            </div>
+          </div>
+          <div className="flex justify-start">
+            <div className="w-80 max-w-80 h-8 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+              <p className="px-3 pt-1">Race:</p>
+              <input className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none" name="race" type="text" />
+            </div>
+          </div>
+          <div className="flex justify-end">
+            <div className="w-80 max-w-80 h-8 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+              <p className="px-3 pt-1">Level:</p>
+              <input className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none" name="level" type="text" />
+            </div>
+          </div>
+          <div className="flex justify-start">
+            <div className="w-80 max-w-80 h-8 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+              <p className="px-3 pt-1">Class:</p>
+              <input
+                className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none"
+                name="character_class"
+                type="text"
+              />
+            </div>
+          </div>
         </div>
-        <div>
-          Description: <input name="description" type="text" />
+        <div className="flex justify-center pt-5">
+          <div className="w-[60%] max-w-[80%] h-50 bg-[#F4BF96] border-2 border-white rounded-lg">
+            <p className="px-3 pt-1">Description:</p>
+            <textarea
+              cols="30"
+              rows="8"
+              className="w-[100%] h-41 bg-[#F3EEEA] rounded-b-md text-wrap text-ellipsis p-1 focus:outline-none"
+              name="description"
+              type="text"
+            />
+          </div>
         </div>
-        <div>
-          Race: <input name="race" type="text" />
-        </div>
-        <div>
-          Level: <input name="level" type="text" />
-        </div>
-        <div>
-          Class: <input name="character_class" type="text" />
-        </div>
-        <button type="submit">Create Character</button>
+        <button
+          className="mt-10 text-[#FF6969] px-2 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-1"
+          type="submit"
+        >
+          Create Character
+        </button>
       </form>
     </div>
   );
