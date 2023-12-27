@@ -206,7 +206,6 @@ export function Content() {
           path="/group"
           element={
             <>
-              <Calendar />
               <GroupsShow group={currentGroup} onShowGroupUpdate={handleShowGroupUpdate} />
               <Modal show={isGroupUpdateVisible} onClose={handleGroupUpdateClose}>
                 <GroupsUpdatePage
@@ -224,6 +223,7 @@ export function Content() {
                   onDestroyMessage={handleDestroyMessage}
                 />
               </Modal>
+              <Calendar />
             </>
           }
         />

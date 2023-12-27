@@ -11,13 +11,25 @@ export function MessagesNew(props) {
     ref.current.value = "";
   };
   return (
-    <div>
-      <h1>New Message</h1>
+    <div className="relative">
       <form onSubmit={handleSubmit}>
-        <div>
-          Content: <input name="content" type="text" ref={ref} />
+        <div className="flex justify-center w-full h-10">
+          <div className="w-[54%] bg-[#FF6969] rounded-b-lg">
+            <input
+              className="w-[54%] rounded-lg text-right pr-2"
+              name="content"
+              type="text"
+              placeholder="New Message"
+              ref={ref}
+            />
+            <button
+              className="max-w-[50%] text-[#FF6969] px-2 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200"
+              type="submit"
+            >
+              Send
+            </button>
+          </div>
         </div>
-        <button type="submit">Send Message</button>
       </form>
     </div>
   );

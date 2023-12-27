@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer>
+    <footer className="relative">
       <p>Copyright 2023</p>
     </footer>
   );
