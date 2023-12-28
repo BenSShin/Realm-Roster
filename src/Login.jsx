@@ -31,20 +31,37 @@ export function Login() {
 
   return (
     <div id="login">
-      <h1>Login</h1>
+      <h1 className="py-[80px] text-2xl font-bold">Login</h1>
       <ul>
         {errors.map((error) => (
           <li key={error}>{error}</li>
         ))}
       </ul>
       <form onSubmit={handleSubmit}>
-        <div>
-          Email: <input name="email" type="email" />
+        <div className="grid grid-cols-1 gap-8">
+          <div className="flex justify-center">
+            <div className="w-80 max-w-80 h-8 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+              <p className="px-3 pt-1">Email:</p>
+              <input className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none " name="email" type="email" />
+            </div>
+          </div>
+          <div className="flex justify-center">
+            <div className="w-80 max-w-80 h-8 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+              <p className="px-3 pt-1">Password:</p>
+              <input
+                className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                name="password"
+                type="password"
+              />
+            </div>
+          </div>
         </div>
-        <div>
-          Password: <input name="password" type="password" />
-        </div>
-        <button type="submit">Login</button>
+        <button
+          className="mt-10 text-[#FF6969] px-2 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-1"
+          type="submit"
+        >
+          Login
+        </button>
       </form>
     </div>
   );
