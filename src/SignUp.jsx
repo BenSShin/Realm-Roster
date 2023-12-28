@@ -1,8 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function SignUp() {
   const [errors, setErrors] = useState([]);
+  let navigate = useNavigate();
+  let path = "/login";
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -13,7 +16,7 @@ export function SignUp() {
       .then((response) => {
         console.log(response.data);
         event.target.reset();
-        window.location.href = "/"; // Change this to hide a modal, redirect to a specific page, etc.
+        navigate(path); // Change this to hide a modal, redirect to a specific page, etc.
       })
       .catch((error) => {
         console.log(error.response.data.errors);
@@ -23,27 +26,71 @@ export function SignUp() {
 
   return (
     <div id="signup">
-      <h1>Signup</h1>
-      <ul>
-        {errors.map((error) => (
-          <li key={error}>{error}</li>
-        ))}
-      </ul>
-      <form onSubmit={handleSubmit}>
-        <div>
-          Name: <input name="name" type="text" />
+      <p className="pt-20 pb-5 text-5xl font-bold font-title">Begin Your Adventure!</p>
+      <h1 className="pb-10 text-3xl font-bold">Signup</h1>
+      <div className="flex justify-center">
+        <div className="grid grid-cols-1 gap-6">
+          <ul>
+            {errors.map((error) => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+          <form onSubmit={handleSubmit}>
+            <div className="border-2 border-white rounded-t-lg">
+              <p className="px-3 pt-1 bg-[#F4BF96] rounded-t-lg">Username:</p>
+              <div className="w-80 max-w-80 h-8 flex justify-end rounded">
+                <input
+                  className="w-full bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                  name="username"
+                  type="text"
+                />
+              </div>
+            </div>
+            <div className="border-2 border-white rounded-t-lg">
+              <p className="px-3 pt-1 bg-[#F4BF96] rounded-t-lg">Email:</p>
+              <div className="w-80 max-w-80 h-8 flex justify-end rounded">
+                <input
+                  className="w-full bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                  name="email"
+                  type="email"
+                />
+              </div>
+            </div>
+            <div className="">
+              <p className="px-3 pt-1 bg-[#F4BF96] rounded-t-lg">Password:</p>
+              <div className="w-80 max-w-80 h-8 flex justify-end rounded">
+                <input
+                  className="w-full bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                  name="password"
+                  type="password"
+                />
+              </div>
+            </div>
+            <div className="">
+              <p className="px-3 pt-1 bg-[#F4BF96] rounded-t-lg">Password_confirmation:</p>
+              <div className="w-80 max-w-80 h-8 flex justify-end rounded">
+                <input
+                  className="w-full bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                  name="password_confirmation"
+                  type="password"
+                />
+              </div>
+            </div>
+            <button
+              className="mt-10 text-[#FF6969] text-lg px-2 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-1"
+              type="submit"
+            >
+              Signup
+            </button>
+          </form>
         </div>
-        <div>
-          Email: <input name="email" type="email" />
-        </div>
-        <div>
-          Password: <input name="password" type="password" />
-        </div>
-        <div>
-          Password confirmation: <input name="password_confirmation" type="password" />
-        </div>
-        <button type="submit">Signup</button>
-      </form>
+      </div>
     </div>
   );
 }
+<div className="flex justify-center">
+  <div className="w-80 max-w-80 h-8 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+    <p className="px-3 pt-1">Email:</p>
+    <input className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none " name="email" type="email" />
+  </div>
+</div>;

@@ -7,13 +7,45 @@ export function Header() {
       <nav className=" p-4 bg-[#1F1717] text-white font-mono">
         {localStorage.jwt !== undefined ? (
           <>
-            <Link to="/">Home</Link> |<Link to="/characters">Your Characters</Link>|
-            <Link to="/characters-new">Create Character</Link>|<Link to="/group-new">Create Group</Link>|
-            <Link to="/login">Login</Link>|<LogoutLink />
+            <div className="flex justify-center">
+              <Link className="px-2" to="/">
+                Home
+              </Link>{" "}
+              |
+              <Link className="px-2" to="/characters">
+                Your Characters
+              </Link>
+              |
+              <Link className="px-2" to="/characters-new">
+                Create Character
+              </Link>
+              |
+              <Link className="px-2" to="/group-new">
+                Create Group
+              </Link>
+              |
+              <Link className="px-2" to="/login">
+                Login
+              </Link>
+              |
+              <div className="px-2">
+                <LogoutLink />
+              </div>
+            </div>
           </>
         ) : (
           <>
-            <Link to="/">Home</Link> | <Link to="/signup">Sign Up</Link>|<Link to="/login">Login</Link>
+            <Link className="px-2" to="/">
+              Home
+            </Link>{" "}
+            |{" "}
+            <Link className="px-2" to="/signup">
+              Sign Up
+            </Link>
+            |
+            <Link className="px-2" to="/login">
+              Login
+            </Link>
           </>
         )}
       </nav>

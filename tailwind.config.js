@@ -2,11 +2,10 @@
 export default {
   content: ["./index.html", "./src/**/*.{html,js,ts,jsx,tsx}"],
   theme: {
-    extend: {
-      backgroundImage: {
-        home: "url('../public/img/home.jpg')",
-      },
+    fontFamily: {
+      title: ["storybook"],
     },
+    extend: {},
   },
   plugins: [],
 };

@@ -1,7 +1,7 @@
 export function MessagesIndex(props) {
   return (
-    <div className="flex items-center justify-center w-full">
-      <div className="bg-white shadow-md rounded-t-lg w-full justify-center w-[54%]">
+    <div className="flex items-center justify-center w-full pt-5">
+      <div className="bg-white shadow-md rounded-t-lg justify-center w-[54%]">
         <div className="p-4 border-b bg-[#FF6969] text-white rounded-t-lg flex justify-between">
           <h1 id="chat-title" className="text-lg font-semibold">
             Group Messages
