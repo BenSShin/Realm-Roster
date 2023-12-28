@@ -5,9 +5,9 @@ export function Modal(props) {
   if (props.show) {
     return (
       <div className="modal-background">
-        <section className="modal-main">
+        <section className="modal-main bg-[#FCF5ED] border-[5px] border-[#CE5A67] rounded-md h-[50%]">
           {props.children}
-          <button className="close" type="button" onClick={props.onClose}>
+          <button className="close mt-3 mr-3" type="button" onClick={props.onClose}>
             &#x2715;
           </button>
         </section>
