@@ -12,10 +12,10 @@ export function CharactersIndex(props) {
               <p className="pt-1 px-2">Race: {character.race}</p>
               <p className="pt-1 px-2">Level: {character.level}</p>
               <p className="pt-1 px-2">Class: {character.character_class}</p>
-              <div className="absolute right-[8.5%] mr-4 mt-1">
+              <div className="absolute right-[10%] mt-1">
                 <Link to="/character">
                   <button
-                    className="text-[#FF6969] px-2 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-2"
+                    className="text-[#FF6969] px-1 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-2"
                     onClick={() => props.onShowCharacter(character)}
                   >
                     More Info
@@ -25,7 +25,7 @@ export function CharactersIndex(props) {
                   <>
                     <Link to="/group">
                       <button
-                        className="text-[#FF6969] px-2 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-1"
+                        className="text-[#FF6969] px-1 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-1"
                         onClick={() => {
                           props.onShowGroup(character);
                           props.onIndexMessages(character);
