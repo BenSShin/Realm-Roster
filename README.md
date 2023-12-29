@@ -1,8 +1,36 @@
-# React + Vite
+# dnd-character-frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the frontend for a dungeons and dragons character creation applicaiton which uses react for frontend and tailwind for styling. The application allows users to create groups with other users and create characters.
 
-Currently, two official plugins are available:
+## Table of Contents
+* [General Info](#general-information)
+* [Technologies Used](#technologies-used)
+* [Setup](#setup)
+* [Project Status](#project-status)
+* [To do](#to-do)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## General Information
+- This application was created for the purpose of giving users the ability to have all information needed to begin a dungeons and dragons sessions in one location
+- Allows for groups to schedule and determine location of meetup
+<!-- - Provides users with table of items and spells to add to their characters -->
+
+## Technologies Used
+- Reactjs - version 5.0.10
+- Ruby in Rails - version 7.0.8
+- Tailwind
+
+## Setup
+All dependencies are listed in the package.json file under dependencies
+The api for this application is needed for the frontend to run properly.
+
+
+## Usage
+
+
+## Project Status
+Project is: _in progress_
+
+## To do:
+- adding the ability to join another group through group list
+- adding list of spells and items
+- allow characters to add items to inventory and spells to spell list through api
