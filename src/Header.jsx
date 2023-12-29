@@ -24,6 +24,10 @@ export function Header() {
                 Create Group
               </Link>
               |
+              <Link className="px-2" to="/groups">
+                Groups
+              </Link>
+              |
               <div className="px-2">
                 <LogoutLink />
               </div>

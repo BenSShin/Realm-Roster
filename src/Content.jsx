@@ -15,6 +15,7 @@ import { Calendar } from "./Calendar";
 import { CharactersIndex } from "./CharactersIndex";
 import { CharactersNew } from "./CharactersNew";
 import { CharactersShow } from "./CharactersShow";
+import { GroupsIndex } from "./GroupsIndex";
 
 export function Content() {
   //messages
@@ -22,6 +23,7 @@ export function Content() {
   const [isMessageShowVisible, setIsMessageShowVisible] = useState(false);
   const [currentMessage, setCurrentMessage] = useState({});
   // group
+  const [groups, setGroups] = useState({});
   const [currentGroup, setCurrentGroup] = useState({});
   const [isGroupUpdateVisible, setIsGroupUpdateVisible] = useState(false);
   // character
@@ -132,6 +134,16 @@ export function Content() {
   };
 
   // Group functions
+
+  // Group index
+  const handleIndexGroups = () => {
+    console.log("handleIndexGroups");
+    axios.get("http://localhost:3000/groups.json").then((response) => {
+      console.log(response.data);
+      setGroups(response.data);
+    });
+  };
+
   // Show Group
   const handleShowGroup = (character) => {
     console.log("handleShowGroup");
@@ -178,9 +190,13 @@ export function Content() {
   };
 
   useEffect(handleIndexCharacters, []);
+  useEffect(handleIndexGroups, []);
 
   return (
     <main className="bg-[#EEE2DE] min-h-screen h-full">
+      <Routes>
+        <Route path="/groups" element={<GroupsIndex groups={groups} />} />
+      </Routes>
       <Routes>
         <Route path="/characters-new" element={<CharactersNew onCreateCharacter={handleCreateCharacter} />} />
       </Routes>
