@@ -55,6 +55,15 @@ export function Content() {
   const handleUpdateCharacter = (id, params, successCallback) => {
     console.log("handleUpdateCharacter", params);
     axios.patch(`http://localhost:3000/characters/${id}.json`, params).then((response) => {
+      setCharacters(
+        characters.map((character) => {
+          if (character.id === response.data.id) {
+            return response.data;
+          } else {
+            return character;
+          }
+        })
+      );
       setCurrentCharacter(response.data);
       successCallback();
     });

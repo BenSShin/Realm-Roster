@@ -35,11 +35,23 @@ export function CharactersNew(props) {
           <div className="flex justify-start">
             <div className="w-80 max-w-80 h-8 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
               <p className="px-3 pt-1">Class:</p>
-              <input
-                className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none"
-                name="character_class"
-                type="text"
-              />
+              <select className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none" name="character_class">
+                <option value="" selected disabled hidden>
+                  Choose Your Class
+                </option>
+                <option value="bard">bard</option>
+                <option value="cleric">cleric</option>
+                <option value="druid">druid</option>
+                <option value="fighter">fighter</option>
+                <option value="barbarian">barbarian</option>
+                <option value="paladin">paladin</option>
+                <option value="monk">monk</option>
+                <option value="ranger">ranger</option>
+                <option value="rogue">rogue</option>
+                <option value="sorcerer">sorcerer</option>
+                <option value="warlock">warlock</option>
+                <option value="wizard">wizard</option>
+              </select>
             </div>
           </div>
         </div>

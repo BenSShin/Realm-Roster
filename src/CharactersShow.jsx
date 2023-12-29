@@ -35,7 +35,7 @@ export function CharactersShow(props) {
               <div className="text-3xl font-bold capitalize">
                 Name:{" "}
                 <input
-                  className="pl-2 w-[400px] overflow bg-[#F3EEEA] focus:outline-[#CE5A67]"
+                  className="pl-2 w-[400px] rounded-r-md overflow bg-[#F3EEEA] focus:outline-[#CE5A67]"
                   defaultValue={props.character.name}
                   name="name"
                   type="text"
@@ -46,7 +46,7 @@ export function CharactersShow(props) {
               <div className="flex justify-start pt-8 pl-[12%]">
                 Level:{" "}
                 <input
-                  className="ml-3 bg-[#F3EEEA] text-center w-[50px] focus:outline-[#CE5A67]"
+                  className="ml-3 bg-[#F3EEEA] rounded-md text-center w-[50px] focus:outline-[#CE5A67]"
                   defaultValue={props.character.level}
                   name="level"
                   type="text"
@@ -57,7 +57,7 @@ export function CharactersShow(props) {
               <div className="flex justify-start pt-8 pl-[12%]">
                 Race:{" "}
                 <input
-                  className="ml-3 pl-2 bg-[#F3EEEA] focus:outline-[#CE5A67]"
+                  className="ml-3 pl-2 bg-[#F3EEEA] rounded-r-md focus:outline-[#CE5A67]"
                   defaultValue={props.character.race}
                   name="race"
                   type="text"
@@ -67,12 +67,24 @@ export function CharactersShow(props) {
             <div className="text-xl font-bold capitalize">
               <div className="flex justify-start pt-8 pl-[12%]">
                 Class:{" "}
-                <input
-                  className="ml-3 pl-2 bg-[#F3EEEA] focus:outline-[#CE5A67]"
+                <select
+                  className="w-[300px] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none ml-3 pl-2 bg-[#F3EEEA] focus:outline-[#CE5A67]"
                   defaultValue={props.character.character_class}
                   name="character_class"
-                  type="text"
-                />
+                >
+                  <option value="bard">bard</option>
+                  <option value="cleric">cleric</option>
+                  <option value="druid">druid</option>
+                  <option value="fighter">fighter</option>
+                  <option value="barbarian">barbarian</option>
+                  <option value="paladin">paladin</option>
+                  <option value="monk">monk</option>
+                  <option value="ranger">ranger</option>
+                  <option value="rogue">rogue</option>
+                  <option value="sorcerer">sorcerer</option>
+                  <option value="warlock">warlock</option>
+                  <option value="wizard">wizard</option>
+                </select>
               </div>
             </div>
             <div className="text-xl capitalize">

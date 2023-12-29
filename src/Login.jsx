@@ -31,7 +31,7 @@ export function Login() {
 
   return (
     <div id="login" className="flex justify-center">
-      <div className="absolute bg-black opacity-20 w-screen h-screen"></div>
+      <div className="absolute bg-black opacity-10 w-screen h-screen"></div>
       <div className="mt-[4em] bg-[center] bg-[url('/public/home1.jpeg')] object-contain bg-no-repeat w-[600px] h-[616px] border-[5px] border-black rounded-md flex justify-center z-0">
         <div className="w-[600px] h-[600px]">
           <div className=" h-[608px] w-[600px] bg-black opacity-50 rounded-sm z-20"></div>
