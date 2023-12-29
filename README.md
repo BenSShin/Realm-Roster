@@ -1,4 +1,4 @@
-# dnd-character-frontend
+# Realm-Roster
 
 This is the frontend for a dungeons and dragons character creation applicaiton which uses react for frontend and tailwind for styling. The application allows users to create groups with other users and create characters.
 
