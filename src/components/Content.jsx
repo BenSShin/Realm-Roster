@@ -1,21 +1,21 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { MessagesIndex } from "./MessagesIndex";
-import { SignUp } from "./SignUp";
-import { Login } from "./Login";
-import { MessagesNew } from "./MessagesNew";
-import { Modal } from "./Modal";
-import { MessagesShow } from "./MessagesShow";
-import { GroupsShow } from "./GroupsShow";
-import { GroupsNew } from "./GroupsNew";
-import { GroupsUpdatePage } from "./GroupsUpdatePage";
+import { MessagesIndex } from "./MainContent/Message/MessagesIndex";
+import { SignUp } from "./Authorization/SignUp";
+import { Login } from "./Authorization/Login";
+import { MessagesNew } from "./MainContent/Message/MessagesNew";
+import { Modal } from "./Modal/Modal";
+import { MessagesShow } from "./MainContent/Message/MessagesShow";
+import { GroupsShow } from "./MainContent/Group/GroupsShow";
+import { GroupsNew } from "./MainContent/Group/GroupsNew";
+import { GroupsUpdatePage } from "./MainContent/Group/GroupsUpdatePage";
 import { Route, Routes } from "react-router-dom";
 import { HomePage } from "./HomePage";
-import { Calendar } from "./Calendar";
-import { CharactersIndex } from "./CharactersIndex";
-import { CharactersNew } from "./CharactersNew";
-import { CharactersShow } from "./CharactersShow";
-import { GroupsIndex } from "./GroupsIndex";
+import { Calendar } from "./MainContent/Group/Calendar";
+import { CharactersIndex } from "./MainContent/Character/CharactersIndex";
+import { CharactersNew } from "./MainContent/Character/CharactersNew";
+import { CharactersShow } from "./MainContent/Character/CharactersShow";
+import { GroupsIndex } from "./MainContent/Group/GroupsIndex";
 
 export function Content() {
   //messages

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { LogoutLink } from "./Logout";
+import { LogoutLink } from "./Authorization/Logout";
 
 export function Header() {
   return (
