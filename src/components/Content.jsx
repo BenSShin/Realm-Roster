@@ -16,6 +16,7 @@ import { CharactersIndex } from "./MainContent/Character/CharactersIndex";
 import { CharactersNew } from "./MainContent/Character/CharactersNew";
 import { CharactersShow } from "./MainContent/Character/CharactersShow";
 import { GroupsIndex } from "./MainContent/Group/GroupsIndex";
+import { Initiative } from "./MainContent/Combat/Initiative";
 
 export function Content() {
   //messages
@@ -252,6 +253,9 @@ export function Content() {
             </>
           }
         />
+      </Routes>
+      <Routes>
+        <Route path="/combat" element={<Initiative />} />
       </Routes>
       <Routes>
         <Route path="/" element={<HomePage />} />
