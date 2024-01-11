@@ -20,7 +20,28 @@ export function Initiative() {
     setIsCreatureUpdateVisible(false);
   };
 
-  let tabId = 0;
+  const handleUpdateCombat = (id, params, successCallback) => {
+    axios.patch(`http://localhost:3000/combats/${id}.json`, params).then((response) => {
+      setCreatures(
+        creatures.map((creature) => {
+          if (creature.id === response.data.id) {
+            return response.data;
+          } else {
+            return creature;
+          }
+        })
+      );
+      successCallback();
+      handleClose();
+    });
+  };
+
+  const handleDestroyCombat = (combat) => {
+    axios.delete(`http://localhost:3000/combats/${combat.id}.json`).then((response) => {
+      setCreatures(creatures.filter((c) => c.id !== combat.id));
+      handleClose();
+    });
+  };
 
   const maxLengthCheck = (object) => {
     if (object.target.value.length > object.target.maxLength) {
@@ -41,16 +62,6 @@ export function Initiative() {
     });
   };
 
-  const handleDestroyCombat = (creature) => {
-    axios.destroy(`http://localhost:3000/combats/${creature.id}.json`).then((response) => {
-      setCharacters(characters.filter((c) => c.id !== character.id));
-    });
-  };
-
-  const handleUpdateCombat = (creature) => {
-    axios.destroy;
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const params = new FormData(event.target);
@@ -60,6 +71,7 @@ export function Initiative() {
   if (creatures) {
     useEffect(handleIndexCombat, []);
   }
+  let tabId = 0;
   return (
     <>
       <div>
@@ -85,7 +97,11 @@ export function Initiative() {
                       <p className="pt-1 px-2">Status: {creature.status}</p>
                       <button onClick={() => handleShowUpdate(creature)}>Update</button>
                       <Modal show={isCreatureUpdateVisible} onClose={handleClose}>
-                        <CombatShow combat={combat} />
+                        <CombatShow
+                          combat={combat}
+                          onUpdateCombat={handleUpdateCombat}
+                          onDestroyCombat={handleDestroyCombat}
+                        />
                       </Modal>
                     </div>
                   </div>

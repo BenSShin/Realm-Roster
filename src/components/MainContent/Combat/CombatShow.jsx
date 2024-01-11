@@ -4,9 +4,20 @@ export function CombatShow(props) {
       object.target.value = object.target.value.slice(0, object.target.maxLength);
     }
   };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const params = new FormData(event.target);
+    props.onUpdateCombat(props.combat.id, params, () => event.target.reset());
+  };
+
+  const handleClick = () => {
+    props.onDestroyCombat(props.combat);
+  };
+
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2">
           <input type="text" name="tab_id" defaultValue={1} hidden />
           <div>
@@ -47,7 +58,9 @@ export function CombatShow(props) {
             </select>
           </div>
         </div>
+        <button type="submit">Update</button>
       </form>
+      <button onClick={handleClick}>Delete</button>
     </div>
   );
 }
