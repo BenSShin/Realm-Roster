@@ -93,7 +93,7 @@ export function Content() {
     console.log("handleCreateMessage", params);
     axios.post("http://localhost:3000/messages.json", params).then((response) => {
       setMessages([...messages, response.data]);
-      successCallback;
+      successCallback();
     });
   };
   // Show message model with update and delete button
@@ -159,7 +159,7 @@ export function Content() {
     console.log("handleCreateGroup", params);
     axios.post("http://localhost:3000/groups.json", params).then((response) => {
       setCurrentGroup([currentGroup, response.data]);
-      successCallback;
+      successCallback();
     });
   };
   // closes update model for group

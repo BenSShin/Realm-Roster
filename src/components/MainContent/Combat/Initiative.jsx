@@ -9,6 +9,33 @@ export function Initiative() {
   const [creatures, setCreatures] = useState([]);
   const [isCreatureUpdateVisible, setIsCreatureUpdateVisible] = useState(false);
   const [combat, setCombat] = useState([]);
+  const [damageInput, setDamageInput] = useState(0);
+  const [currentHealth, setCurrentHealth] = useState();
+
+  const handleHealthChange = (e) => {
+    const newValue = parseInt(e.target.value);
+    setCurrentHealth = parseInt(newValue);
+  };
+
+  const handleDamageInputChange = (e) => {
+    setDamageInput(parseInt(e.target.value));
+  };
+
+  const statusColor = (status) => {
+    let color;
+    if (status === "Dead") {
+      color = "border-[#C31207]";
+    } else if (status === "Incapacitated") {
+      color = "border-[#FFD95A]";
+    } else if (status === "Out of Combat") {
+      color = "border-[#38419D]";
+    } else if (status === "In Combat") {
+      color = "border-[#C1F2B0]";
+    } else {
+      color = "border-[#FEA1A1]";
+    }
+    return color;
+  };
 
   const handleShowUpdate = (creature) => {
     console.log(creature);
@@ -51,8 +78,8 @@ export function Initiative() {
 
   const combatNew = (params, successCallback) => {
     axios.post("http://localhost:3000/combats.json", params).then((response) => {
-      setCreatures([creatures, response.data]);
-      successCallback;
+      setCreatures([...creatures, response.data]);
+      successCallback();
     });
   };
   const handleIndexCombat = () => {
@@ -68,9 +95,9 @@ export function Initiative() {
     combatNew(params, () => event.target.reset());
     ref.current.value = "";
   };
-  if (creatures) {
-    useEffect(handleIndexCombat, []);
-  }
+
+  useEffect(handleIndexCombat, []);
+
   let tabId = 0;
   return (
     <>
@@ -81,7 +108,6 @@ export function Initiative() {
             <Tab onClick={handleIndexCombat}>Tab 2</Tab>
             <Tab onClick={handleIndexCombat}>Tab 3</Tab>
             <Tab onClick={handleIndexCombat}>Tab 4</Tab>
-            <Tab onClick={handleIndexCombat}>Tab 5</Tab>
           </TabList>
           {/* tab 1 */}
           <TabPanel>
@@ -90,12 +116,43 @@ export function Initiative() {
               creature.tab_id == tabId ? (
                 <div key={creature.id}>
                   <div className="flex justify-center">
-                    <div className="flex justify-center my-5 w-[80%] h-9 bg-[#A9A9A9] rounded-md">
-                      <p className="capitalize pt-1 px-2">{creature.creature_name}</p>
-                      <p className="pt-1 px-2">Roll: {creature.initiative_roll}</p>
-                      <p className="pt-1 px-2">Health: {creature.health}</p>
-                      <p className="pt-1 px-2">Status: {creature.status}</p>
-                      <button onClick={() => handleShowUpdate(creature)}>Update</button>
+                    <div
+                      className={`flex justify-start my-5 w-[80%] h-10 bg-[#A9A9A9] rounded-md border-4 ${statusColor(
+                        creature.status
+                      )}`}
+                    >
+                      <p className="capitalize pt-1 px-2 font-bold">{creature.creature_name}</p>
+                      <p className="pt-1 px-2 font-bold">Roll: {creature.initiative_roll}</p>
+                      <div className="flex justify-center">
+                        <p className="pt-1 px-2 font-bold">Health:</p>
+                        <input type="number" defaultValue={creature.health} className="w-[50px] my-1 pl-2 rounded-md" />
+                        <p className="pt-1 pr-2 font-bold">/{creature.health}</p>
+                      </div>
+                      <p className="pt-1 px-2 font-bold">Status: {creature.status}</p>
+                      <div className="absolute right-[10%] flex">
+                        <div className="flex justify-center">
+                          <p className="pt-1 font-bold">Damage:</p>
+                          <input
+                            className="w-[60px] my-1 bg-[#F3EEEA] rounded-md pl-2 mx-2 focus:outline-none"
+                            maxLength={3}
+                            onChange={maxLengthCheck}
+                            type="number"
+                            name="damage"
+                          />
+                          <button
+                            className="my-[2px] text-[#FF6969] px-2 mr-4 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-1"
+                            type="submit"
+                          >
+                            damage
+                          </button>
+                        </div>
+                        <button
+                          className="my-[2px] text-[#FF6969] px-2 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-1"
+                          onClick={() => handleShowUpdate(creature)}
+                        >
+                          Update
+                        </button>
+                      </div>
                       <Modal show={isCreatureUpdateVisible} onClose={handleClose}>
                         <CombatShow
                           combat={combat}
@@ -114,27 +171,43 @@ export function Initiative() {
               <form onSubmit={handleSubmit}>
                 <div className="flex justify-center">
                   <input type="text" name="tab_id" value={1} hidden />
-                  <div>
-                    <label htmlFor="creature_name">Name:</label>
-                    <input type="text" name="creature_name" />
+                  <div className="w-70 h-8 mx-3 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+                    <p className="px-3 pt-1">Name:</p>
+                    <input
+                      className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                      type="text"
+                      name="creature_name"
+                    />
                   </div>
-                  <div>
-                    <label htmlFor="initiative_roll">Initiative:</label>
-                    <input type="number" maxLength="2" onChange={maxLengthCheck} name="initiative_roll" />
+                  <div className="w-30 max-w-80 h-8 mx-3 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+                    <p className="px-3 pt-1">Initiative:</p>
+                    <input
+                      className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                      type="number"
+                      maxLength="2"
+                      onChange={maxLengthCheck}
+                      name="initiative_roll"
+                    />
                   </div>
-                  <div>
-                    <label htmlFor="health">Health:</label>
-                    <input type="number" name="health" maxLength={3} onChange={maxLengthCheck} />
+                  <div className="w-60 max-w-80 h-8 mx-3 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+                    <p className="px-3 pt-1">Health:</p>
+                    <input
+                      className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                      type="number"
+                      name="health"
+                      maxLength={3}
+                      onChange={maxLengthCheck}
+                    />
                   </div>
-                  <div>
-                    <label htmlFor="status">Status:</label>
-                    <select name="status">
+                  <div className="w-60 max-w-80 h-8 mx-3 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+                    <p className="px-3 pt-1">Status:</p>
+                    <select className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none" name="status">
                       <option value="" selected disabled hidden>
                         Choose Status
                       </option>
                       <option value="In Combat">In Combat</option>
                       <option value="Out of Combat">Out of Combat</option>
-                      <option value="Incapacitated">incapacitated</option>
+                      <option value="Incapacitated">Incapacitated</option>
                       <option value="Saving Throw">Saving Throw</option>
                       <option value="Dead">Dead</option>
                     </select>
@@ -142,7 +215,7 @@ export function Initiative() {
                 </div>
                 <button
                   type="submit"
-                  className="text-[#FF6969] px-1 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-2"
+                  className="mt-5 text-[#FF6969] px-1 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-2"
                 >
                   Add
                 </button>
@@ -152,50 +225,107 @@ export function Initiative() {
           {/* tab 2 */}
           <TabPanel>
             {(tabId = 2)}
-
             {creatures.map((creature) =>
-              creature.tab_id == 2 ? (
-                <>
-                  <div key={creature.id}>
-                    <p>{creature.creature_name}</p>
-                    <p>{creature.initiative_roll}</p>
-                    <p>{creature.health}</p>
-                    <p>{creature.status}</p>
+              creature.tab_id == tabId ? (
+                <div key={creature.id}>
+                  <div className="flex justify-center">
+                    <div className="flex justify-start my-5 w-[80%] h-9 bg-[#A9A9A9] rounded-md">
+                      <p className="capitalize pt-1 px-2 font-bold">{creature.creature_name}</p>
+                      <p className="pt-1 px-2 font-bold">Roll: {creature.initiative_roll}</p>
+                      <div className="flex justify-center">
+                        <p className="pt-1 px-2 font-bold">Health:</p>
+                        <input
+                          type="number"
+                          className="w-[50px] my-1 bg-[#F3EEEA] rounded-md pl-2 mr-1 focus:outline-none"
+                          maxLength="3"
+                          onChange={maxLengthCheck}
+                          defaultValue={creature.health}
+                        />
+                        <p className="pt-1 pr-2 font-bold">/{creature.health}</p>
+                      </div>
+                      <p className="pt-1 px-2 font-bold">Status: {creature.status}</p>
+                      <div className="absolute right-[10%] flex">
+                        {/* <p className="pt-1 mx-2 font-bold">Damage</p>
+                        <input
+                          className="w-[60px] mt-1 bg-[#F3EEEA] rounded-md pl-2 mx-2 focus:outline-none"
+                          type="number"
+                        />
+                        <button className="mt-1 text-[#FF6969] px-2 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-1">
+                          damage
+                        </button> */}
+                        <button
+                          className="mt-[2px] text-[#FF6969] px-2 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-1"
+                          onClick={() => handleShowUpdate(creature)}
+                        >
+                          Update
+                        </button>
+                      </div>
+                      <Modal show={isCreatureUpdateVisible} onClose={handleClose}>
+                        <CombatShow
+                          combat={combat}
+                          onUpdateCombat={handleUpdateCombat}
+                          onDestroyCombat={handleDestroyCombat}
+                        />
+                      </Modal>
+                    </div>
                   </div>
-                </>
+                </div>
               ) : (
                 <></>
               )
             )}
             <div>
               <form onSubmit={handleSubmit}>
-                <input type="text" name="tab_id" value={2} hidden />
-                <div>
-                  <label htmlFor="creature_name">Name:</label>
-                  <input type="text" name="creature_name" />
+                <div className="flex justify-center">
+                  <input type="text" name="tab_id" value={2} hidden />
+                  <div className="w-70 h-8 mx-3 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+                    <p className="px-3 pt-1 ">Name:</p>
+                    <input
+                      className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                      type="text"
+                      name="creature_name"
+                    />
+                  </div>
+                  <div className="w-30 max-w-80 h-8 mx-3 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+                    <p className="px-3 pt-1">Initiative:</p>
+                    <input
+                      className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                      type="number"
+                      maxLength="2"
+                      onChange={maxLengthCheck}
+                      name="initiative_roll"
+                    />
+                  </div>
+                  <div className="w-60 max-w-80 h-8 mx-3 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+                    <p className="px-3 pt-1">Health:</p>
+                    <input
+                      className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                      type="number"
+                      name="health"
+                      maxLength={3}
+                      onChange={maxLengthCheck}
+                    />
+                  </div>
+                  <div className="w-60 max-w-80 h-8 mx-3 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+                    <p className="px-3 pt-1">Status:</p>
+                    <select className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none" name="status">
+                      <option value="" selected disabled hidden>
+                        Choose Status
+                      </option>
+                      <option value="In Combat">In Combat</option>
+                      <option value="Out of Combat">Out of Combat</option>
+                      <option value="Incapacitated">Incapacitated</option>
+                      <option value="Saving Throw">Saving Throw</option>
+                      <option value="Dead">Dead</option>
+                    </select>
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="initiative_roll">Initiative:</label>
-                  <input type="text" name="initiative_roll" />
-                </div>
-                <div>
-                  <label htmlFor="health">Health:</label>
-                  <input type="text" name="health" />
-                </div>
-                <div>
-                  <label htmlFor="status">Status:</label>
-                  <select name="status">
-                    <option value="" selected disabled hidden>
-                      Choose Status
-                    </option>
-                    <option value="In Combat">In Combat</option>
-                    <option value="Out of Combat">Out of Combat</option>
-                    <option value="Incapacitated">incapacitated</option>
-                    <option value="Saving Throw">Saving Throw</option>
-                    <option value="Dead">Dead</option>
-                  </select>
-                </div>
-                <button type="submit">Add</button>
+                <button
+                  type="submit"
+                  className="mt-5 text-[#FF6969] px-1 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-2"
+                >
+                  Add
+                </button>
               </form>
             </div>
           </TabPanel>
@@ -205,142 +335,212 @@ export function Initiative() {
 
             {creatures.map((creature) =>
               creature.tab_id == tabId ? (
-                <>
-                  <div key={creature.id}>
-                    <p>{creature.creature_name}</p>
-                    <p>{creature.initiative_roll}</p>
-                    <p>{creature.health}</p>
-                    <p>{creature.status}</p>
+                <div key={creature.id}>
+                  <div className="flex justify-center">
+                    <div className="flex justify-start my-5 w-[80%] h-9 bg-[#A9A9A9] rounded-md">
+                      <p className="capitalize pt-1 px-2 font-bold">{creature.creature_name}</p>
+                      <p className="pt-1 px-2 font-bold">Roll: {creature.initiative_roll}</p>
+                      <div className="flex justify-center">
+                        <p className="pt-1 px-2 font-bold">Health:</p>
+                        <input
+                          type="number"
+                          className="w-[50px] my-1 bg-[#F3EEEA] rounded-md pl-2 mr-1 focus:outline-none"
+                          maxLength="3"
+                          onChange={maxLengthCheck}
+                          defaultValue={creature.health}
+                        />
+                        <p className="pt-1 pr-2 font-bold">/{creature.health}</p>
+                      </div>
+                      <p className="pt-1 px-2 font-bold">Status: {creature.status}</p>
+                      <div className="absolute right-[10%] flex">
+                        {/* <p className="pt-1 mx-2 font-bold">Damage</p>
+                        <input
+                          className="w-[60px] mt-1 bg-[#F3EEEA] rounded-md pl-2 mx-2 focus:outline-none"
+                          type="number"
+                        />
+                        <button className="mt-1 text-[#FF6969] px-2 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-1">
+                          damage
+                        </button> */}
+                        <button
+                          className="mt-[2px] text-[#FF6969] px-2 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-1"
+                          onClick={() => handleShowUpdate(creature)}
+                        >
+                          Update
+                        </button>
+                      </div>
+                      <Modal show={isCreatureUpdateVisible} onClose={handleClose}>
+                        <CombatShow
+                          combat={combat}
+                          onUpdateCombat={handleUpdateCombat}
+                          onDestroyCombat={handleDestroyCombat}
+                        />
+                      </Modal>
+                    </div>
                   </div>
-                </>
+                </div>
               ) : (
                 <></>
               )
             )}
             <div>
               <form onSubmit={handleSubmit}>
-                <input type="text" name="tab_id" value={1} hidden />
-                <div>
-                  <label htmlFor="creature_name">Name:</label>
-                  <input type="text" name="creature_name" />
+                <div className="flex justify-center">
+                  <input type="text" name="tab_id" value={3} hidden />
+                  <div className="w-70 h-8 mx-3 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+                    <p className="px-3 pt-1">Name:</p>
+                    <input
+                      className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                      type="text"
+                      name="creature_name"
+                    />
+                  </div>
+                  <div className="w-30 max-w-80 h-8 mx-3 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+                    <p className="px-3 pt-1">Initiative:</p>
+                    <input
+                      className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                      type="number"
+                      maxLength="2"
+                      onChange={maxLengthCheck}
+                      name="initiative_roll"
+                    />
+                  </div>
+                  <div className="w-60 max-w-80 h-8 mx-3 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+                    <p className="px-3 pt-1">Health:</p>
+                    <input
+                      className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                      type="number"
+                      name="health"
+                      maxLength={3}
+                      onChange={maxLengthCheck}
+                    />
+                  </div>
+                  <div className="w-60 max-w-80 h-8 mx-3 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+                    <p className="px-3 pt-1">Status:</p>
+                    <select className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none" name="status">
+                      <option value="" selected disabled hidden>
+                        Choose Status
+                      </option>
+                      <option value="In Combat">In Combat</option>
+                      <option value="Out of Combat">Out of Combat</option>
+                      <option value="Incapacitated">Incapacitated</option>
+                      <option value="Saving Throw">Saving Throw</option>
+                      <option value="Dead">Dead</option>
+                    </select>
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="initiative_roll">Initiative:</label>
-                  <input type="text" name="initiative_roll" />
-                </div>
-                <div>
-                  <label htmlFor="health">Health:</label>
-                  <input type="text" name="health" />
-                </div>
-                <div>
-                  <label htmlFor="status">Status:</label>
-                  <select name="status">
-                    <option value="" selected disabled hidden>
-                      Choose Status
-                    </option>
-                    <option value="In Combat">In Combat</option>
-                    <option value="Out of Combat">Out of Combat</option>
-                    <option value="Incapacitated">incapacitated</option>
-                    <option value="Dead">Dead</option>
-                  </select>
-                </div>
-                <button type="submit">Add</button>
+                <button
+                  type="submit"
+                  className="mt-5 text-[#FF6969] px-1 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-2"
+                >
+                  Add
+                </button>
               </form>
             </div>
           </TabPanel>
           {/* tab 4 */}
           <TabPanel>
+            {(tabId = 4)}
             {creatures.map((creature) =>
               creature.tab_id == tabId ? (
-                <>
-                  <div key={creature.id}>
-                    <p>{creature.creature_name}</p>
-                    <p>{creature.initiative_roll}</p>
-                    <p>{creature.health}</p>
-                    <p>{creature.status}</p>
+                <div key={creature.id}>
+                  <div className="flex justify-center">
+                    <div className="flex justify-start my-5 w-[80%] h-9 bg-[#A9A9A9] rounded-md">
+                      <p className="capitalize pt-1 px-2 font-bold">{creature.creature_name}</p>
+                      <p className="pt-1 px-2 font-bold">Roll: {creature.initiative_roll}</p>
+                      <div className="flex justify-center">
+                        <p className="pt-1 px-2 font-bold">Health:</p>
+                        <input
+                          type="number"
+                          className="w-[50px] my-1 bg-[#F3EEEA] rounded-md pl-2 mr-1 focus:outline-none"
+                          maxLength="3"
+                          onChange={maxLengthCheck}
+                          defaultValue={creature.health}
+                        />
+                        <p className="pt-1 pr-2 font-bold">/{creature.health}</p>
+                      </div>
+                      <p className="pt-1 px-2 font-bold">Status: {creature.status}</p>
+                      <div className="absolute right-[10%] flex">
+                        {/* <p className="pt-1 mx-2 font-bold">Damage</p>
+                        <input
+                          className="w-[60px] mt-1 bg-[#F3EEEA] rounded-md pl-2 mx-2 focus:outline-none"
+                          type="number"
+                        />
+                        <button className="mt-1 text-[#FF6969] px-2 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-1">
+                          damage
+                        </button> */}
+                        <button
+                          className="mt-[2px] text-[#FF6969] px-2 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-1"
+                          onClick={() => handleShowUpdate(creature)}
+                        >
+                          Update
+                        </button>
+                      </div>
+                      <Modal show={isCreatureUpdateVisible} onClose={handleClose}>
+                        <CombatShow
+                          combat={combat}
+                          onUpdateCombat={handleUpdateCombat}
+                          onDestroyCombat={handleDestroyCombat}
+                        />
+                      </Modal>
+                    </div>
                   </div>
-                </>
+                </div>
               ) : (
                 <></>
               )
             )}
             <div>
               <form onSubmit={handleSubmit}>
-                <input type="text" name="tab_id" value={1} hidden />
-                <div>
-                  <label htmlFor="creature_name">Name:</label>
-                  <input type="text" name="creature_name" />
-                </div>
-                <div>
-                  <label htmlFor="initiative_roll">Initiative:</label>
-                  <input type="text" name="initiative_roll" />
-                </div>
-                <div>
-                  <label htmlFor="health">Health:</label>
-                  <input type="text" name="health" />
-                </div>
-                <div>
-                  <label htmlFor="status">Status:</label>
-                  <select name="status">
-                    <option value="" selected disabled hidden>
-                      Choose Status
-                    </option>
-                    <option value="In Combat">In Combat</option>
-                    <option value="Out of Combat">Out of Combat</option>
-                    <option value="Incapacitated">incapacitated</option>
-                    <option value="Dead">Dead</option>
-                  </select>
-                </div>
-                <button type="submit">Add</button>
-              </form>
-            </div>
-          </TabPanel>
-          {/* tab 5 */}
-          <TabPanel>
-            {(tabId = 5)}
-
-            {creatures.map((creature) =>
-              creature.tab_id == tabId ? (
-                <>
-                  <div key={creature.id}>
-                    <p>{creature.creature_name}</p>
-                    <p>{creature.initiative_roll}</p>
-                    <p>{creature.health}</p>
-                    <p>{creature.status}</p>
+                <div className="flex justify-center">
+                  <input type="text" name="tab_id" value={4} hidden />
+                  <div className="w-70 h-8 mx-3 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+                    <p className="px-3 pt-1">Name:</p>
+                    <input
+                      className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                      type="text"
+                      name="creature_name"
+                    />
                   </div>
-                </>
-              ) : (
-                <></>
-              )
-            )}
-            <div>
-              <form onSubmit={handleSubmit}>
-                <input type="text" name="tab_id" value={1} hidden />
-                <div>
-                  <label htmlFor="creature_name">Name:</label>
-                  <input type="text" name="creature_name" />
+                  <div className="w-30 max-w-80 h-8 mx-3 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+                    <p className="px-3 pt-1">Initiative:</p>
+                    <input
+                      className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                      type="number"
+                      maxLength="2"
+                      onChange={maxLengthCheck}
+                      name="initiative_roll"
+                    />
+                  </div>
+                  <div className="w-60 max-w-80 h-8 mx-3 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+                    <p className="px-3 pt-1">Health:</p>
+                    <input
+                      className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                      type="number"
+                      name="health"
+                      maxLength={3}
+                      onChange={maxLengthCheck}
+                    />
+                  </div>
+                  <div className="w-60 max-w-80 h-8 mx-3 bg-[#F4BF96] flex justify-end  border-2 border-white rounded-r-lg">
+                    <p className="px-3 pt-1">Status:</p>
+                    <select className="w-[80%] bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none" name="status">
+                      <option value="" selected disabled hidden>
+                        Choose Status
+                      </option>
+                      <option value="In Combat">In Combat</option>
+                      <option value="Out of Combat">Out of Combat</option>
+                      <option value="Incapacitated">Incapacitated</option>
+                      <option value="Saving Throw">Saving Throw</option>
+                      <option value="Dead">Dead</option>
+                    </select>
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="initiative_roll">Initiative:</label>
-                  <input type="text" name="initiative_roll" />
-                </div>
-                <div>
-                  <label htmlFor="health">Health:</label>
-                  <input type="text" name="health" />
-                </div>
-                <div>
-                  <label htmlFor="status">Status:</label>
-                  <select name="status">
-                    <option value="" selected disabled hidden>
-                      Choose Status
-                    </option>
-                    <option value="In Combat">In Combat</option>
-                    <option value="Out of Combat">Out of Combat</option>
-                    <option value="Incapacitated">incapacitated</option>
-                    <option value="Dead">Dead</option>
-                  </select>
-                </div>
-                <button type="submit">Add</button>
+                <button
+                  type="submit"
+                  className="mt-5 text-[#FF6969] px-1 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-2"
+                >
+                  Add
+                </button>
               </form>
             </div>
           </TabPanel>
