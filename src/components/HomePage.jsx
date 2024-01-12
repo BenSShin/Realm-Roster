@@ -3,7 +3,7 @@ export function HomePage() {
     <div className="bg-[#B7B7B7] min-h-screen w-full">
       <div className="min-h-60 bg-gradient-to-r from-[#B31312] to-[#FF7676]">
         <h1 className="text-4xl font-bold text-[#FCF5ED] flex justify-start pl-10 pt-10">Welcome to Realm Roster</h1>
-        <p className="flex justify-start pl-[100px] pt-2 ml-5 ">D&D Application</p>
+        <p className="flex justify-start pl-[100px] pt-2 ml-5 font-bold">Character Creation and Campaign Helper</p>
       </div>
       <div className="flex justify-start ">
         <div className="pl-[20px] bg-[url('/public/calm.jpeg')] overflow-hidden bg-no-repeat w-screen h-screen"></div>

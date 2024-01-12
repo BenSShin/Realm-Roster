@@ -28,6 +28,10 @@ export function Header() {
                 Groups
               </Link>
               |
+              <Link className="px-2" to="/combat">
+                Initiative
+              </Link>
+              |
               <div className="px-2">
                 <LogoutLink />
               </div>

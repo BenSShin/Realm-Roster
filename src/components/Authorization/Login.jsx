@@ -38,7 +38,7 @@ export function Login() {
       <div className="mt-[4em] bg-[center] bg-[url('/public/home1.jpeg')] object-contain bg-no-repeat w-[600px] h-[616px] border-[5px] border-black rounded-md flex justify-center z-0">
         <div className="w-[600px] h-[600px]">
           <div className=" h-[608px] w-[600px] bg-black opacity-50 rounded-sm z-20"></div>
-          <div className="absolute top-12 pt-[3em] pl-[5em] z-30">
+          <div className="absolute top-12 pt-[3em] mx-[140px] z-50">
             <div>
               <h1 className="pt-[130px] pb-[70px] text-white text-2xl font-bold flex justify-center z-40">Login</h1>
             </div>

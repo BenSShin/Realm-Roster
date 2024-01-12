@@ -5,7 +5,7 @@ import axios from "axios";
 import { Modal } from "../../Modal/Modal";
 import { CombatShow } from "./CombatShow";
 
-export function Initiative() {
+export function Combat() {
   axios.defaults.baseURL =
     process.env.NODE_ENV === "development" ? "http://localhost:3000/" : "https://realm-roster-api.onrender.com/";
 

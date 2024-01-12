@@ -32,48 +32,48 @@ export function SignUp() {
       <p className="pt-20 pb-5 text-5xl font-bold font-title">Begin Your Adventure!</p>
       <h1 className="pb-10 text-3xl font-bold">Signup</h1>
       <div className="flex justify-center">
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1">
           <ul>
             {errors.map((error) => (
               <li key={error}>{error}</li>
             ))}
           </ul>
           <form onSubmit={handleSubmit}>
-            <div className="border-2 border-white rounded-t-lg">
+            <div className="border-2 border-white rounded-t-lg mt-2">
               <p className="px-3 pt-1 bg-[#F4BF96] rounded-t-lg">Username:</p>
               <div className="w-80 max-w-80 h-8 flex justify-end rounded">
                 <input
-                  className="w-full bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                  className="w-full bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none text-center"
                   name="username"
                   type="text"
                 />
               </div>
             </div>
-            <div className="border-2 border-white rounded-t-lg">
+            <div className="border-2 border-white rounded-t-lg mt-2">
               <p className="px-3 pt-1 bg-[#F4BF96] rounded-t-lg">Email:</p>
               <div className="w-80 max-w-80 h-8 flex justify-end rounded">
                 <input
-                  className="w-full bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                  className="w-full bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none text-center"
                   name="email"
                   type="email"
                 />
               </div>
             </div>
-            <div className="">
-              <p className="px-3 pt-1 bg-[#F4BF96] rounded-t-lg">Password:</p>
+            <div className="border-2 border-white rounded-t-lg mt-2">
+              <p className="px-3 pt-1 bg-[#F4BF96] rounded-t-lg ">Password:</p>
               <div className="w-80 max-w-80 h-8 flex justify-end rounded">
                 <input
-                  className="w-full bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                  className="w-full bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none text-center"
                   name="password"
                   type="password"
                 />
               </div>
             </div>
-            <div className="">
+            <div className="border-2 border-white rounded-t-lg mt-2">
               <p className="px-3 pt-1 bg-[#F4BF96] rounded-t-lg">Password_confirmation:</p>
               <div className="w-80 max-w-80 h-8 flex justify-end rounded">
                 <input
-                  className="w-full bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none "
+                  className="w-full bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none text-center"
                   name="password_confirmation"
                   type="password"
                 />
