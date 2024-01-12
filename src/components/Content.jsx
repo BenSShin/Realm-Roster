@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { Axios } from "axios";
 import { useState, useEffect } from "react";
 import { MessagesIndex } from "./MainContent/Message/MessagesIndex";
 import { SignUp } from "./Authorization/SignUp";
@@ -19,6 +19,9 @@ import { GroupsIndex } from "./MainContent/Group/GroupsIndex";
 import { Initiative } from "./MainContent/Combat/Initiative";
 
 export function Content() {
+  axios.defaults.baseURL =
+    process.env.NODE_ENV === "development" ? "http://localhost:3000/" : "https://realm-roster-api.onrender.com/";
+
   //messages
   const [messages, setMessages] = useState([]);
   const [isMessageShowVisible, setIsMessageShowVisible] = useState(false);
@@ -35,7 +38,7 @@ export function Content() {
   // index of user's characters
   const handleIndexCharacters = () => {
     console.log("handleIndexCharacters");
-    axios.get("http://localhost:3000/characters.json").then((response) => {
+    axios.get("characters.json").then((response) => {
       console.log(response.data);
       setCharacters(response.data);
     });
@@ -43,7 +46,7 @@ export function Content() {
   // character create
   const handleCreateCharacter = (params, successCallback) => {
     console.log("handleCreateCharacter", params);
-    axios.post("http://localhost:3000/characters.json", params).then((response) => {
+    axios.post("characters.json", params).then((response) => {
       setCharacters([...characters, response.data]);
       successCallback();
     });
@@ -57,7 +60,7 @@ export function Content() {
   // character update
   const handleUpdateCharacter = (id, params, successCallback) => {
     console.log("handleUpdateCharacter", params);
-    axios.patch(`http://localhost:3000/characters/${id}.json`, params).then((response) => {
+    axios.patch(`characters/${id}.json`, params).then((response) => {
       setCharacters(
         characters.map((character) => {
           if (character.id === response.data.id) {
@@ -74,7 +77,7 @@ export function Content() {
   // character delete
   const handleDestroyCharacter = (character) => {
     console.log("handleDestroyCharacter", character);
-    axios.delete(`http://localhost:3000/characters/${character.id}.json`).then((response) => {
+    axios.delete(`characters/${character.id}.json`).then((response) => {
       setCharacters(characters.filter((c) => c.id !== character.id));
     });
   };
@@ -83,7 +86,7 @@ export function Content() {
   // index of group's messages
   const handleIndexMessages = (character) => {
     console.log("handleIndexMessages");
-    axios.get(`http://localhost:3000/messages.json?group_id=${character.group_id}`).then((response) => {
+    axios.get(`messages.json?group_id=${character.group_id}`).then((response) => {
       console.log(response.data);
       setMessages(response.data);
     });
@@ -91,7 +94,7 @@ export function Content() {
   // Create message
   const handleCreateMessage = (params, successCallback) => {
     console.log("handleCreateMessage", params);
-    axios.post("http://localhost:3000/messages.json", params).then((response) => {
+    axios.post("messages.json", params).then((response) => {
       setMessages([...messages, response.data]);
       successCallback();
     });
@@ -105,7 +108,7 @@ export function Content() {
   // update Message
   const handleUpdateMessage = (id, params, successCallback) => {
     console.log("handleUpdateMessage", params);
-    axios.patch(`http://localhost:3000/messages/${id}.json`, params).then((response) => {
+    axios.patch(`messages/${id}.json`, params).then((response) => {
       setMessages(
         messages.map((message) => {
           if (message.id === response.data.id) {
@@ -128,7 +131,7 @@ export function Content() {
   const handleDestroyMessage = (message) => {
     console.log("handleDestroyMessage", message);
     // eslint-disable-next-line no-unused-vars
-    axios.delete(`http://localhost:3000/messages/${message.id}.json`).then((response) => {
+    axios.delete(`messages/${message.id}.json`).then((response) => {
       setMessages(messages.filter((p) => p.id !== message.id));
       handleClose();
     });
@@ -139,7 +142,7 @@ export function Content() {
   // Group index
   const handleIndexGroups = () => {
     console.log("handleIndexGroups");
-    axios.get("http://localhost:3000/groups.json").then((response) => {
+    axios.get("groups.json").then((response) => {
       console.log(response.data);
       setGroups(response.data);
     });
@@ -148,7 +151,7 @@ export function Content() {
   // Show Group
   const handleShowGroup = (character) => {
     console.log("handleShowGroup");
-    axios.get(`http://localhost:3000/groups/${character.group_id}.json`).then((response) => {
+    axios.get(`groups/${character.group_id}.json`).then((response) => {
       console.log(response.data);
       setCurrentGroup(response.data);
     });
@@ -157,7 +160,7 @@ export function Content() {
   // Create Group user update works but have to refresh
   const handleCreateGroup = (params, successCallback) => {
     console.log("handleCreateGroup", params);
-    axios.post("http://localhost:3000/groups.json", params).then((response) => {
+    axios.post("groups.json", params).then((response) => {
       setCurrentGroup([currentGroup, response.data]);
       successCallback();
     });
@@ -175,7 +178,7 @@ export function Content() {
   // updates group
   const handleUpdateGroup = (id, params, successCallback) => {
     console.log("handleUpdateGroup", params, id);
-    axios.patch(`http://localhost:3000/groups/${id}.json`, params).then((response) => {
+    axios.patch(`groups/${id}.json`, params).then((response) => {
       setCurrentGroup(response.data);
       successCallback();
     });
@@ -184,7 +187,7 @@ export function Content() {
 
   // Destroy group
   const handleDestroyGroup = (group) => {
-    axios.delete(`http://localhost:3000/groups/${group.id}.json`).then((response) => {
+    axios.delete(`groups/${group.id}.json`).then((response) => {
       console.log(response);
     });
     handleGroupUpdateClose();

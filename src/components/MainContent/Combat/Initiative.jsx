@@ -6,6 +6,9 @@ import { Modal } from "../../Modal/Modal";
 import { CombatShow } from "./CombatShow";
 
 export function Initiative() {
+  axios.defaults.baseURL =
+    process.env.NODE_ENV === "development" ? "http://localhost:3000/" : "https://realm-roster-api.onrender.com/";
+
   const [creatures, setCreatures] = useState([]);
   const [isCreatureUpdateVisible, setIsCreatureUpdateVisible] = useState(false);
   const [combat, setCombat] = useState([]);
@@ -71,7 +74,7 @@ export function Initiative() {
   };
 
   const handleUpdateCombat = (id, params, successCallback) => {
-    axios.patch(`http://localhost:3000/combats/${id}.json`, params).then((response) => {
+    axios.patch(`combats/${id}.json`, params).then((response) => {
       setCreatures(
         creatures.map((creature) => {
           if (creature.id === response.data.id) {
@@ -87,21 +90,21 @@ export function Initiative() {
   };
 
   const handleDestroyCombat = (combat) => {
-    axios.delete(`http://localhost:3000/combats/${combat.id}.json`).then((response) => {
+    axios.delete(`combats/${combat.id}.json`).then((response) => {
       setCreatures(creatures.filter((c) => c.id !== combat.id));
       handleClose();
     });
   };
 
   const combatNew = (params, successCallback) => {
-    axios.post("http://localhost:3000/combats.json", params).then((response) => {
+    axios.post("combats.json", params).then((response) => {
       setCreatures([...creatures, response.data]);
       successCallback();
     });
   };
 
   const handleIndexCombat = () => {
-    axios.get(`http://localhost:3000/combats.json`).then((response) => {
+    axios.get(`combats.json`).then((response) => {
       console.log(response.data);
       setCreatures(response.data);
       if (!creaturesHealth.length) {
