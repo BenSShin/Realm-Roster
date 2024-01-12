@@ -10,7 +10,7 @@ export function GroupsNew(props) {
   return (
     <div className="flex justify-center w-screen h-screen">
       <div className="absolute bg-black opacity-20 w-screen h-screen"></div>
-      <div className="pt-[200px] flex justify-center">
+      <div className="pt-[120px] flex justify-center">
         <div className="bg-[center] bg-[url('/public/group.jpeg')] object-contain bg-no-repeat w-[1070px] h-[600px] border-2 border-black rounded-md z-0">
           <div className="flex justify-center">
             <h1 className="mt-[70px] text-2xl w=[300px] text-white font-bold z-10">Start Your Party</h1>
