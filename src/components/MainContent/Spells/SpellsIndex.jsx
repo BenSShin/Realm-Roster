@@ -1,22 +1,32 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Button } from "react-day-picker";
+import { Modal } from "../../Modal/Modal";
+import { SpellShow } from "./SpellShow";
 
 export function SpellsIndex() {
   axios.defaults.baseURL =
-    process.env.NODE_ENV === "development" ? "http://localhost:3000/" : "https://realm-roster-api.onrender.com/";
+    process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://realm-roster-api.onrender.com";
 
   const [spells, setSpells] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage] = useState(12);
   const [spellSearch, setSpellSearch] = useState("");
-
-  const classesSpace = (classes) => {};
+  const [spellInfo, setSpellInfo] = useState();
+  const [infoVisible, setInfoVisible] = useState(false);
 
   const handleIndexSpells = () => {
-    axios.get("/spells.json").then((response) => {
+    axios.get("/spells").then((response) => {
       setSpells(response.data);
     });
+  };
+
+  const handleSpellShow = (spell) => {
+    setInfoVisible(true);
+    setSpellInfo(spell);
+  };
+
+  const handleClose = () => {
+    setInfoVisible(false);
   };
 
   const indexOfLastCard = currentPage * cardsPerPage;
@@ -62,6 +72,9 @@ export function SpellsIndex() {
 
   return (
     <>
+      <Modal show={infoVisible} onClose={handleClose}>
+        <SpellShow spell={spellInfo} />
+      </Modal>
       <div className="pt-10">
         <div className="flex justify-center">
           <div className="border-2 border-white rounded-t-lg mt-2">
@@ -80,11 +93,18 @@ export function SpellsIndex() {
             {currentCards.map((spell) => (
               <div key={spell.id}>
                 <div className="w-[200px]">
-                  <div className="border-2 border-white rounded-md h-[120px] m-3">
-                    <p>{spell.name}</p>
+                  <div className="relative border-2 border-[#ECCCB2] rounded-md bg-[#FCF5ED] h-[150px] m-3">
+                    <div className="">
+                      <button
+                        className="absolute bottom-2 right-8 w-[60%] text-[#FF6969] px-2 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200"
+                        onClick={() => handleSpellShow(spell)}
+                      >
+                        Spell Info
+                      </button>
+                    </div>
+                    <p className="mt-2">{spell.name}</p>
                     <p>Level: {spell.level}</p>
                     <p>{spell.classes}</p>
-                    <button>Spell Info</button>
                   </div>
                 </div>
               </div>

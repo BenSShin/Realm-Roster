@@ -15,7 +15,7 @@ export function SignUp() {
     setErrors([]);
     const params = new FormData(event.target);
     axios
-      .post("users.json", params)
+      .post("users", params)
       .then((response) => {
         console.log(response.data);
         event.target.reset();
