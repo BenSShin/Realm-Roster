@@ -130,7 +130,7 @@ export function Combat() {
   let tabId = 0;
   return (
     <>
-      <div>
+      <div className="bg-[#EEE2DE] w-screen h-screen">
         <Tabs>
           <TabList>
             <Tab onClick={handleIndexCombat}>Tab 1</Tab>

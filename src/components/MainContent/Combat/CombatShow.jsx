@@ -4,12 +4,11 @@ export function CombatShow(props) {
       object.target.value = object.target.value.slice(0, object.target.maxLength);
     }
   };
-  const ref = useRef(null);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const params = new FormData(event.target);
     props.onUpdateCombat(props.combat.id, params, () => event.target.reset());
-    ref.current.value = "";
   };
 
   const handleClick = () => {

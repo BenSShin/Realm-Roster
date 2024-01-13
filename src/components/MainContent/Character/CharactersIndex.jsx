@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export function CharactersIndex(props) {
   return (
-    <div className="pt-10">
+    <div className="pt-10 bg-[#EEE2DE] w-screen h-screen">
       <h1 className="text-4xl font-bold pb-5">Your Characters</h1>
       {props.characters.map((character) => (
         <div key={character.id}>

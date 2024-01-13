@@ -11,6 +11,8 @@ export function SpellsIndex() {
   const [cardsPerPage] = useState(12);
   const [spellSearch, setSpellSearch] = useState("");
 
+  const classesSpace = (classes) => {};
+
   const handleIndexSpells = () => {
     axios.get("/spells.json").then((response) => {
       setSpells(response.data);
@@ -60,43 +62,54 @@ export function SpellsIndex() {
 
   return (
     <>
-      <div>
-        <input
-          type="text"
-          placeholder="Search by Spell Name . . ."
-          value={spellSearch}
-          onChange={(e) => setSpellSearch(e.target.value)}
-        />
-      </div>
-      <div className="grid-cols-3 gap-4">
-        {currentCards.map((spell) => (
-          <div className="grid-cols-3 gap-4" key={spell.id}>
-            <div className="grid-cols-3 gap-4">
-              <p>{spell.name}</p>
-              <p>{spell.level}</p>
-              <p>{spell.classes}</p>
-            </div>
+      <div className="pt-10">
+        <div className="flex justify-center">
+          <div className="border-2 border-white rounded-t-lg mt-2">
+            <p className="px-3 pt-1 bg-[#F4BF96] rounded-t-lg">Spell Search</p>
+            <input
+              className="w-full bg-[#F3EEEA] rounded-r-md pl-2 focus:outline-none text-center"
+              type="text"
+              placeholder="Search by Spell Name . . ."
+              value={spellSearch}
+              onChange={(e) => setSpellSearch(e.target.value)}
+            />
           </div>
-        ))}
-      </div>
-      <div className="flex justify-center">
-        <button
-          className={`bg-blue-500 hover:bg-blue-700 text-white font-bold mt-4 py-2 px-4 rounded ml-2 ${
-            currentPage === 1 ? "bg-blue-700" : ""
-          }`}
-          onClick={() => paginate(1)}
-        >
-          1
-        </button>
-        <div className="pagination mt-4">{renderPageNumbers()}</div>
-        <button
-          className={`bg-blue-500 hover:bg-blue-700 text-white font-bold mt-4 py-2 px-4 rounded ml-2 ${
-            currentPage === 27 ? "bg-blue-700" : ""
-          }`}
-          onClick={() => paginate(27)}
-        >
-          27
-        </button>
+        </div>
+        <div className="flex justify-center mt-5">
+          <div className="grid grid-cols-3 gap-5">
+            {currentCards.map((spell) => (
+              <div key={spell.id}>
+                <div className="w-[200px]">
+                  <div className="border-2 border-white rounded-md h-[120px] m-3">
+                    <p>{spell.name}</p>
+                    <p>Level: {spell.level}</p>
+                    <p>{spell.classes}</p>
+                    <button>Spell Info</button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="flex justify-center">
+          <button
+            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold mt-4 py-2 px-4 rounded ml-2 ${
+              currentPage === 1 ? "bg-blue-700" : ""
+            }`}
+            onClick={() => paginate(1)}
+          >
+            1
+          </button>
+          <div className="pagination mt-4">{renderPageNumbers()}</div>
+          <button
+            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold mt-4 py-2 px-4 rounded ml-2 ${
+              currentPage === 27 ? "bg-blue-700" : ""
+            }`}
+            onClick={() => paginate(27)}
+          >
+            27
+          </button>
+        </div>
       </div>
     </>
   );

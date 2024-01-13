@@ -38,15 +38,12 @@ export function Content() {
   // character functions
   // index of user's characters
   const handleIndexCharacters = () => {
-    console.log("handleIndexCharacters");
     axios.get("characters.json").then((response) => {
-      console.log(response.data);
       setCharacters(response.data);
     });
   };
   // character create
   const handleCreateCharacter = (params, successCallback) => {
-    console.log("handleCreateCharacter", params);
     axios.post("characters.json", params).then((response) => {
       setCharacters([...characters, response.data]);
       successCallback();
@@ -55,12 +52,10 @@ export function Content() {
 
   // character show page
   const handleShowCharacter = (character) => {
-    console.log("handleShowCharacter", character);
     setCurrentCharacter(character);
   };
   // character update
   const handleUpdateCharacter = (id, params, successCallback) => {
-    console.log("handleUpdateCharacter", params);
     axios.patch(`characters/${id}.json`, params).then((response) => {
       setCharacters(
         characters.map((character) => {
@@ -77,7 +72,6 @@ export function Content() {
   };
   // character delete
   const handleDestroyCharacter = (character) => {
-    console.log("handleDestroyCharacter", character);
     axios.delete(`characters/${character.id}.json`).then((response) => {
       setCharacters(characters.filter((c) => c.id !== character.id));
     });
@@ -86,15 +80,12 @@ export function Content() {
   // Message functions
   // index of group's messages
   const handleIndexMessages = (character) => {
-    console.log("handleIndexMessages");
     axios.get(`messages.json?group_id=${character.group_id}`).then((response) => {
-      console.log(response.data);
       setMessages(response.data);
     });
   };
   // Create message
   const handleCreateMessage = (params, successCallback) => {
-    console.log("handleCreateMessage", params);
     axios.post("messages.json", params).then((response) => {
       setMessages([...messages, response.data]);
       successCallback();
@@ -108,7 +99,6 @@ export function Content() {
   };
   // update Message
   const handleUpdateMessage = (id, params, successCallback) => {
-    console.log("handleUpdateMessage", params);
     axios.patch(`messages/${id}.json`, params).then((response) => {
       setMessages(
         messages.map((message) => {
@@ -125,12 +115,10 @@ export function Content() {
   };
   // close model message
   const handleClose = () => {
-    console.log("handleClose");
     setIsMessageShowVisible(false);
   };
   //  Delete a message
   const handleDestroyMessage = (message) => {
-    console.log("handleDestroyMessage", message);
     // eslint-disable-next-line no-unused-vars
     axios.delete(`messages/${message.id}.json`).then((response) => {
       setMessages(messages.filter((p) => p.id !== message.id));
@@ -142,25 +130,20 @@ export function Content() {
 
   // Group index
   const handleIndexGroups = () => {
-    console.log("handleIndexGroups");
     axios.get("groups.json").then((response) => {
-      console.log(response.data);
       setGroups(response.data);
     });
   };
 
   // Show Group
   const handleShowGroup = (character) => {
-    console.log("handleShowGroup");
     axios.get(`groups/${character.group_id}.json`).then((response) => {
-      console.log(response.data);
       setCurrentGroup(response.data);
     });
   };
 
   // Create Group user update works but have to refresh
   const handleCreateGroup = (params, successCallback) => {
-    console.log("handleCreateGroup", params);
     axios.post("groups.json", params).then((response) => {
       setCurrentGroup([currentGroup, response.data]);
       successCallback();
@@ -168,17 +151,14 @@ export function Content() {
   };
   // closes update model for group
   const handleGroupUpdateClose = () => {
-    console.log("handleClose");
     setIsGroupUpdateVisible(false);
   };
   // shows update model for group
   const handleShowGroupUpdate = () => {
-    console.log("handleShowGroupUpdate");
     setIsGroupUpdateVisible(true);
   };
   // updates group
   const handleUpdateGroup = (id, params, successCallback) => {
-    console.log("handleUpdateGroup", params, id);
     axios.patch(`groups/${id}.json`, params).then((response) => {
       setCurrentGroup(response.data);
       successCallback();
@@ -188,9 +168,7 @@ export function Content() {
 
   // Destroy group
   const handleDestroyGroup = (group) => {
-    axios.delete(`groups/${group.id}.json`).then((response) => {
-      console.log(response);
-    });
+    axios.delete(`groups/${group.id}.json`).then((response) => {});
     handleGroupUpdateClose();
   };
 
@@ -198,7 +176,7 @@ export function Content() {
   useEffect(handleIndexGroups, []);
 
   return (
-    <main className="bg-[#EEE2DE] min-h-screen h-full">
+    <main className="bg-[#DEB6AB] min-h-screen h-full">
       <Routes>
         <Route path="/groups" element={<GroupsIndex groups={groups} />} />
       </Routes>

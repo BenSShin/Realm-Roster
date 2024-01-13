@@ -1,6 +1,6 @@
 export function GroupsIndex(props) {
   return (
-    <div className="pt-10">
+    <div className="pt-10 bg-[#EEE2DE] w-screen h-screen">
       <p className="text-4xl font-bold pb-5">Join a Party</p>
       {props.groups.map((group) => (
         <div key={group.id}>

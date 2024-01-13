@@ -24,7 +24,7 @@ export function CharactersShow(props) {
   };
 
   return (
-    <div className="">
+    <div className="bg-[#EEE2DE] w-screen h-screen">
       <div className="flex justify-start p-5 bg-[#CE5A67] rounded-b-md">
         <h1 className="text-3xl font-bold">Character Information</h1>
       </div>
@@ -93,7 +93,7 @@ export function CharactersShow(props) {
                 <textarea
                   cols="30"
                   rows="8"
-                  className="w-[700px] max-h-[350px] h-41 bg-[#F3EEEA] rounded-b-md text-wrap text-ellipsis p-1 focus:outline-[#CE5A67]"
+                  className="w-[700px] max-h-[350px] h-41 bg-[#F5E8C7] rounded-b-md text-wrap text-ellipsis p-1 focus:outline-[#CE5A67]"
                   defaultValue={props.character.description}
                   name="description"
                   type="text"
