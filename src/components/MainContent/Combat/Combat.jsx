@@ -116,7 +116,6 @@ export function Combat() {
     event.preventDefault();
     const params = new FormData(event.target);
     combatNew(params, () => event.target.reset());
-    ref.current.value = "";
   };
 
   useEffect(handleIndexCombat, [creaturesHealth]);
