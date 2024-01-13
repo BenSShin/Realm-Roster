@@ -35,13 +35,13 @@ export function Content() {
   // character functions
   // index of user's characters
   const handleIndexCharacters = () => {
-    axios.get("characters.json").then((response) => {
+    axios.get("/characters.json").then((response) => {
       setCharacters(response.data);
     });
   };
   // character create
   const handleCreateCharacter = (params, successCallback) => {
-    axios.post("characters.json", params).then((response) => {
+    axios.post("/characters.json", params).then((response) => {
       setCharacters([...characters, response.data]);
       successCallback();
     });
@@ -53,7 +53,7 @@ export function Content() {
   };
   // character update
   const handleUpdateCharacter = (id, params, successCallback) => {
-    axios.patch(`characters/${id}.json`, params).then((response) => {
+    axios.patch(`/characters/${id}.json`, params).then((response) => {
       setCharacters(
         characters.map((character) => {
           if (character.id === response.data.id) {
@@ -69,7 +69,7 @@ export function Content() {
   };
   // character delete
   const handleDestroyCharacter = (character) => {
-    axios.delete(`characters/${character.id}.json`).then((response) => {
+    axios.delete(`/characters/${character.id}.json`).then((response) => {
       setCharacters(characters.filter((c) => c.id !== character.id));
     });
   };
@@ -77,26 +77,26 @@ export function Content() {
   // Message functions
   // index of group's messages
   const handleIndexMessages = (character) => {
-    axios.get(`messages?group_id=${character.group_id}.json`).then((response) => {
+    axios.get(`/messages?group_id=${character.group_id}.json`).then((response) => {
       setMessages(response.data);
     });
   };
   // Create message
   const handleCreateMessage = (params, successCallback) => {
-    axios.post("messages.json", params).then((response) => {
+    axios.post("/messages.json", params).then((response) => {
       setMessages([...messages, response.data]);
       successCallback();
     });
   };
   // Show message model with update and delete button
   const handleShowMessage = (message) => {
-    console.log("handleShowMessage.json", message);
+    console.log("/handleShowMessage.json", message);
     setIsMessageShowVisible(true);
     setCurrentMessage(message);
   };
   // update Message
   const handleUpdateMessage = (id, params, successCallback) => {
-    axios.patch(`messages/${id}.json`, params).then((response) => {
+    axios.patch(`/messages/${id}.json`, params).then((response) => {
       setMessages(
         messages.map((message) => {
           if (message.id === response.data.id) {
@@ -117,7 +117,7 @@ export function Content() {
   //  Delete a message
   const handleDestroyMessage = (message) => {
     // eslint-disable-next-line no-unused-vars
-    axios.delete(`messages/${message.id}.json`).then((response) => {
+    axios.delete(`/messages/${message.id}.json`).then((response) => {
       setMessages(messages.filter((p) => p.id !== message.id));
       handleClose();
     });
@@ -127,21 +127,21 @@ export function Content() {
 
   // Group index
   const handleIndexGroups = () => {
-    axios.get("groups.json").then((response) => {
+    axios.get("/groups.json").then((response) => {
       setGroups(response.data);
     });
   };
 
   // Show Group
   const handleShowGroup = (character) => {
-    axios.get(`groups/${character.group_id}.json`).then((response) => {
+    axios.get(`/groups/${character.group_id}.json`).then((response) => {
       setCurrentGroup(response.data);
     });
   };
 
   // Create Group user update works but have to refresh
   const handleCreateGroup = (params, successCallback) => {
-    axios.post("groups.json", params).then((response) => {
+    axios.post("/groups.json", params).then((response) => {
       setCurrentGroup([currentGroup, response.data]);
       successCallback();
     });
@@ -156,7 +156,7 @@ export function Content() {
   };
   // updates group
   const handleUpdateGroup = (id, params, successCallback) => {
-    axios.patch(`groups/${id}.json`, params).then((response) => {
+    axios.patch(`/groups/${id}.json`, params).then((response) => {
       setCurrentGroup(response.data);
       successCallback();
     });
@@ -165,7 +165,7 @@ export function Content() {
 
   // Destroy group
   const handleDestroyGroup = (group) => {
-    axios.delete(`groups/${group.id}.json`).then((response) => {});
+    axios.delete(`/groups/${group.id}.json`).then((response) => {});
     handleGroupUpdateClose();
   };
 

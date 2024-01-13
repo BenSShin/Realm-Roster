@@ -68,7 +68,7 @@ export function Combat() {
   };
 
   const handleUpdateCombat = (id, params, successCallback) => {
-    axios.patch(`combats/${id}.json`, params).then((response) => {
+    axios.patch(`/combats/${id}.json`, params).then((response) => {
       setCreatures(
         creatures.map((creature) => {
           if (creature.id === response.data.id) {
@@ -84,21 +84,21 @@ export function Combat() {
   };
 
   const handleDestroyCombat = (combat) => {
-    axios.delete(`combats/${combat.id}.json`).then((response) => {
+    axios.delete(`/combats/${combat.id}.json`).then((response) => {
       setCreatures(creatures.filter((c) => c.id !== combat.id));
       handleClose();
     });
   };
 
   const combatNew = (params, successCallback) => {
-    axios.post("combats.json", params).then((response) => {
+    axios.post("/combats.json", params).then((response) => {
       setCreatures([...creatures, response.data]);
       successCallback();
     });
   };
 
   const handleIndexCombat = () => {
-    axios.get(`combats.json`).then((response) => {
+    axios.get(`/combats.json`).then((response) => {
       console.log(response.data);
       setCreatures(response.data);
       if (!creaturesHealth.length) {

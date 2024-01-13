@@ -12,7 +12,7 @@ export function SpellsIndex() {
   const [infoVisible, setInfoVisible] = useState(false);
 
   const handleIndexSpells = () => {
-    axios.get("spells.json").then((response) => {
+    axios.get("/spells.json").then((response) => {
       setSpells(response.data);
     });
   };
