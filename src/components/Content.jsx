@@ -17,6 +17,7 @@ import { CharactersNew } from "./MainContent/Character/CharactersNew";
 import { CharactersShow } from "./MainContent/Character/CharactersShow";
 import { GroupsIndex } from "./MainContent/Group/GroupsIndex";
 import { Combat } from "./MainContent/Combat/Combat";
+import { SpellsIndex } from "./MainContent/Spells/SpellsIndex";
 
 export function Content() {
   axios.defaults.baseURL =
@@ -259,6 +260,9 @@ export function Content() {
       </Routes>
       <Routes>
         <Route path="/combat" element={<Combat />} />
+      </Routes>
+      <Routes>
+        <Route path="/spells" element={<SpellsIndex />} />
       </Routes>
       <Routes>
         <Route path="/" element={<HomePage />} />

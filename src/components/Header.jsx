@@ -45,7 +45,7 @@ export function Header() {
                         <Link to="/combat">Combat</Link>
                       </li>
                       <li className="text-center">
-                        <Link>Spell List</Link>
+                        <Link to="/spells">Spell List</Link>
                       </li>
                     </ul>
                   </div>
