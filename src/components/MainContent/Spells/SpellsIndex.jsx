@@ -4,9 +4,6 @@ import { Modal } from "../../Modal/Modal";
 import { SpellShow } from "./SpellShow";
 
 export function SpellsIndex() {
-  axios.defaults.baseURL =
-    process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://realm-roster-api.onrender.com";
-
   const [spells, setSpells] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage] = useState(12);
@@ -15,7 +12,7 @@ export function SpellsIndex() {
   const [infoVisible, setInfoVisible] = useState(false);
 
   const handleIndexSpells = () => {
-    axios.get("/spells").then((response) => {
+    axios.get("spells.json").then((response) => {
       setSpells(response.data);
     });
   };

@@ -6,9 +6,6 @@ import { Modal } from "../../Modal/Modal";
 import { CombatShow } from "./CombatShow";
 
 export function Combat() {
-  axios.defaults.baseURL =
-    process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://realm-roster-api.onrender.com";
-
   const [creatures, setCreatures] = useState([]);
   const [isCreatureUpdateVisible, setIsCreatureUpdateVisible] = useState(false);
   const [combat, setCombat] = useState([]);
@@ -87,21 +84,21 @@ export function Combat() {
   };
 
   const handleDestroyCombat = (combat) => {
-    axios.delete(`/combats/${combat.id}`).then((response) => {
+    axios.delete(`combats/${combat.id}.json`).then((response) => {
       setCreatures(creatures.filter((c) => c.id !== combat.id));
       handleClose();
     });
   };
 
   const combatNew = (params, successCallback) => {
-    axios.post("/combats", params).then((response) => {
+    axios.post("combats.json", params).then((response) => {
       setCreatures([...creatures, response.data]);
       successCallback();
     });
   };
 
   const handleIndexCombat = () => {
-    axios.get(`combats`).then((response) => {
+    axios.get(`combats.json`).then((response) => {
       console.log(response.data);
       setCreatures(response.data);
       if (!creaturesHealth.length) {

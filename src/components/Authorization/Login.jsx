@@ -7,9 +7,6 @@ if (jwt) {
 }
 
 export function Login() {
-  axios.defaults.baseURL =
-    process.env.NODE_ENV === "development" ? "http://localhost:3000/" : "https://realm-roster-api.onrender.com/";
-
   const [errors, setErrors] = useState([]);
 
   const handleSubmit = (event) => {
@@ -17,7 +14,7 @@ export function Login() {
     setErrors([]);
     const params = new FormData(event.target);
     axios
-      .post("sessions", params)
+      .post("sessions.json", params)
       .then((response) => {
         console.log(response.data);
         axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;

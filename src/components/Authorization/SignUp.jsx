@@ -3,9 +3,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function SignUp() {
-  axios.defaults.baseURL =
-    process.env.NODE_ENV === "development" ? "http://localhost:3000/" : "https://realm-roster-api.onrender.com/";
-
   const [errors, setErrors] = useState([]);
   let navigate = useNavigate();
   let path = "/login";
@@ -15,7 +12,7 @@ export function SignUp() {
     setErrors([]);
     const params = new FormData(event.target);
     axios
-      .post("users", params)
+      .post("users.json", params)
       .then((response) => {
         console.log(response.data);
         event.target.reset();
