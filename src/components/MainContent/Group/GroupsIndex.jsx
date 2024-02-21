@@ -12,6 +12,11 @@ export function GroupsIndex(props) {
                 <div className="flex justify-start object-left w-[80%] h-9 bg-[#A9A9A9] rounded-md">
                   <p className="capitalize pt-1 pl-5">{group.name}</p>
                   <p className="pt-1 pl-5">Members: {group.users.length}</p>
+                  <div className="absolute right-[10%]">
+                    <button className=" m-1 text-[#FF6969] px-1 border-2 border-[#FF6969] rounded-lg bg-[#FFE5CA] hover:bg-[#FF6969] hover:text-[#FFE5CA] hover:duration-200 mr-1">
+                      View Group
+                    </button>
+                  </div>
                 </div>
               </div>
             </>

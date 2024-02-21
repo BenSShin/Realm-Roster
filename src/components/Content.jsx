@@ -176,11 +176,7 @@ export function Content() {
     <main className="bg-[#DEB6AB] min-h-screen h-full">
       <Routes>
         <Route path="/groups" element={<GroupsIndex groups={groups} />} />
-      </Routes>
-      <Routes>
         <Route path="/characters-new" element={<CharactersNew onCreateCharacter={handleCreateCharacter} />} />
-      </Routes>
-      <Routes>
         <Route
           path="/character"
           element={
@@ -192,8 +188,6 @@ export function Content() {
             />
           }
         />
-      </Routes>
-      <Routes>
         <Route
           path="/characters"
           element={
@@ -205,8 +199,6 @@ export function Content() {
             />
           }
         />
-      </Routes>
-      <Routes>
         <Route
           path="/group"
           element={
@@ -232,23 +224,11 @@ export function Content() {
             </>
           }
         />
-      </Routes>
-      <Routes>
         <Route path="/combat" element={<Combat />} />
-      </Routes>
-      <Routes>
         <Route path="/spells" element={<SpellsIndex />} />
-      </Routes>
-      <Routes>
         <Route path="/" element={<HomePage />} />
-      </Routes>
-      <Routes>
         <Route path="/signup" element={<SignUp />} />
-      </Routes>
-      <Routes>
         <Route path="/login" element={<Login />} />
-      </Routes>
-      <Routes>
         <Route path="/group-new" element={<GroupsNew onCreateGroup={handleCreateGroup} />} />
       </Routes>
     </main>
